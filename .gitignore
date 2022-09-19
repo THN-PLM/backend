@@ -35,3 +35,16 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### jwt secure
+src/main/resources/*
+application.yml
+application-secret.yml
+
+## Qclass
+build/generated
+src/main/generated
+
+## 이미지들
+src/main/promedia/*
+src/main/prodmedia/image/*

@@ -1,0 +1,49 @@
+server:
+  port: 8180
+
+spring:
+
+  session:
+    storage-type: redis
+
+  redis:
+    host: localhost
+    password: qpqpqp0614
+    port: 6379
+
+  main:
+    allow-bean-definition-overriding: true
+
+  profiles:
+    include: secret
+
+  # Database
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/eci
+    platform: postgres
+    username: postgres
+    password: qpqpqp0614
+
+  # jpa properties
+  jpa:
+    hibernate:
+      ddl-auto: create # update # When you launch the application for the first time - switch "none" at "create"
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: true
+
+  # 파일 업로드 크기
+  servlet.multipart.max-file-size: 1500MB
+  servlet.multipart.max-request-size: 1500MB
+
+  # spring boot utf8
+  http.encoding.charset: UTF-8
+  http.encoding.enabled: true
+  http.encoding.force: true
+
+upload:
+  image:
+    location: src/main/prodmedia/image/
