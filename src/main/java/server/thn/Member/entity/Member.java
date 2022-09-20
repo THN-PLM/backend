@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import server.thn.Member.entity.teamClassification.TeamClassification;
-import server.thn.Member.entitycommon.EntityDate;
+import server.thn.Common.entity.EntityDate;
 
 import javax.persistence.*;
 import java.util.List;

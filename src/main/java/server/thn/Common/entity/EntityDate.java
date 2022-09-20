@@ -1,4 +1,4 @@
-package server.thn.Member.entitycommon;
+package server.thn.Common.entity;
 
 import lombok.Getter;
 import lombok.Setter;

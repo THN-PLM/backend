@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import server.thn.Member.entitycommon.EntityDate;
+import server.thn.Common.entity.EntityDate;
 import server.thn.Member.exception.UnsupportedImageFormatException;
 
 import javax.persistence.*;

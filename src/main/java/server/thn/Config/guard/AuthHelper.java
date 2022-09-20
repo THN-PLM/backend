@@ -4,8 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import server.thn.Config.security.CustomAuthenticationToken;
 import server.thn.Config.security.CustomUserDetails;
+import server.thn.Member.entity.RoleType;
 
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
