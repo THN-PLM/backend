@@ -19,6 +19,7 @@ import server.thn.Member.exception.MemberEmailAlreadyExistsException;
 import server.thn.Member.exception.MemberNotFoundException;
 import server.thn.Member.exception.PasswordNotValidateException;
 import server.thn.Member.exception.RefreshExpiredException;
+import server.thn.Member.repository.DepartmentRepository;
 import server.thn.Member.repository.MemberRepository;
 import server.thn.Member.repository.RoleRepository;
 import server.thn.Member.repository.classification.*;
@@ -36,10 +37,7 @@ public class SignService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
-    private final TeamClassification1Repository teamClassification1Repository;
-    private final TeamClassification2Repository teamClassification2Repository;
-    private final TeamClassification3Repository teamClassification3Repository;
-    private final TeamClassification4Repository teamClassification4Repository;
+    private final DepartmentRepository departmentRepository;
 
     @Value("${default.image.address}")
     private String defaultImageAddress;
@@ -50,13 +48,9 @@ public class SignService {
         Member member = memberRepository.save(
                 SignUpRequest.toEntity(
                         req,
-                        //roleRepository.findByRoleType(RoleType.).orElseThrow(RoleNotFoundException::new),
                         passwordEncoder,
                         roleRepository,
-                        teamClassification1Repository,
-                        teamClassification2Repository,
-                        teamClassification3Repository,
-                        teamClassification4Repository
+                        departmentRepository
                 )
         );
         if(req.getProfileImage()!=null){

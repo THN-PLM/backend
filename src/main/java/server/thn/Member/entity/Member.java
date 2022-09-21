@@ -36,13 +36,15 @@ public class Member extends EntityDate {
     @Column(nullable = false, length = 20)
     private String username;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "t1_id", nullable = false)
-    @JoinColumn(name = "t2_id", nullable = false)
-    @JoinColumn(name = "t3_id", nullable = false)
-    @JoinColumn(name = "t4_id", nullable = false)
-    private TeamClassification department;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "t1_id", nullable = false)
+//    @JoinColumn(name = "t2_id", nullable = false)
+//    @JoinColumn(name = "t3_id", nullable = false)
+//    @JoinColumn(name = "t4_id", nullable = false)
+//    private TeamClassification department;
 
+    @Column(nullable = false)
+    private Department department;
 
     @Column(nullable = false, unique = true, length = 20)
     private String contact;
@@ -67,7 +69,8 @@ public class Member extends EntityDate {
             String email,
             String password,
             String username,
-            TeamClassification department,
+            //TeamClassification department,
+            Department department,
             String contact,
             List<Role> roles,
             ProfileImage profileImage
@@ -99,7 +102,8 @@ public class Member extends EntityDate {
             String email,
             String password,
             String username,
-            TeamClassification department,
+            //TeamClassification department,
+            Department department,
             String contact,
             List<Role> roles
     ) {
@@ -114,11 +118,6 @@ public class Member extends EntityDate {
                                 this, r))
                         .collect(toSet());
         this.profileImage = null;
-    }
-
-
-    public void updateDepartment(TeamClassification department) {
-        this.department = department;
     }
 
     /**
