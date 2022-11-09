@@ -70,7 +70,6 @@ dependencies {
 	//dsl
 	compile('org.projectlombok:lombok')
 	annotationProcessor('org.projectlombok:lombok')
-	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jpa"
 	annotationProcessor("jakarta.persistence:jakarta.persistence-api")
 	annotationProcessor("jakarta.annotation:jakarta.annotation-api")
 
@@ -97,30 +96,41 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
 test {
 	useJUnitPlatform()
 }
-//querydsl 추가 시작
-def querydslDir = "$buildDir/generated/querydsl"
+
+// query dsl add
+
+def querydslSrcDir = 'src/main/generated'
 
 querydsl {
+	library = "com.querydsl:querydsl-apt"
 	jpa = true
-	querydslSourcesDir = querydslDir
+	querydslSourcesDir = querydslSrcDir
 }
-sourceSets {
-	main.java.srcDir querydslDir
-}
+
 compileQuerydsl{
 	options.annotationProcessorPath = configurations.querydsl
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
 	querydsl.extendsFrom compileClasspath
 }
 
-clean {
-	delete file('src/main/generated') // 인텔리제이 Annotation processor 생성물 생성위치
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main/java', querydslSrcDir]
+		}
+	}
 }
+
+tasks.withType(JavaCompile) {
+	options.annotationProcessorGeneratedSourcesDirectory = file(querydslSrcDir)
+}
+
