@@ -1,10 +1,8 @@
-package server.thn.Member.entity.teamClassification;
+package server.thn.Project.entity.produceOrgClassification;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +10,7 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TeamClassification3 {
+public class ProduceOrganizationClassification1 {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE2")
@@ -25,16 +23,12 @@ public class TeamClassification3 {
     @Column
     private Integer last;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teamClassification2_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private TeamClassification2 teamClassification2;
 
     @OneToMany(
-            mappedBy = "teamClassification3",
+            mappedBy = "teamClassification1",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<TeamClassification4> teamClassification4_list;
-
+    private List<ProduceOrganizationClassification2> teamClassification2List;
 }
+

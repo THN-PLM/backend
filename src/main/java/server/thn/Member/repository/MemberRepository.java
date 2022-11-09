@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import server.thn.Member.entity.Member;
-import server.thn.Member.entity.teamClassification.TeamClassification;
+import server.thn.Project.entity.produceOrgClassification.ProduceOrganizationClassification;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,11 +30,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>, CustomMem
     )
     Page<Member> findByMembers(@Param("members") List<Member> members, Pageable pageable);
 
-    List<Member> findByDepartment(TeamClassification teamClassification);
-    Page<Member> findByDepartment(TeamClassification teamClassification, Pageable pageable);
-
-    List<Member> findByUsernameContainingIgnoreCaseAndDepartment(String username, TeamClassification teamClassification);
-
-    Page<Member> findByUsernameContainingIgnoreCaseAndDepartment(String username, TeamClassification teamClassification, Pageable pageable);
+    List<Member> findByDepartment(ProduceOrganizationClassification teamClassification);
+    Page<Member> findByDepartment(ProduceOrganizationClassification teamClassification, Pageable pageable);
 
 }

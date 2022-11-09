@@ -4,7 +4,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import server.thn.Member.entity.teamClassification.TeamClassification;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import server.thn.Common.entity.EntityDate;
 
 import javax.persistence.*;
@@ -43,7 +44,9 @@ public class Member extends EntityDate {
 //    @JoinColumn(name = "t4_id", nullable = false)
 //    private TeamClassification department;
 
-    @Column(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Department department;
 
     @Column(nullable = false, unique = true, length = 20)

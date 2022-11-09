@@ -1,4 +1,4 @@
-package server.thn.Member.entity.teamClassification;
+package server.thn.Item.entity.itemOrgClassification;
 
 import lombok.AccessLevel;
 import lombok.Getter;

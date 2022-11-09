@@ -1,17 +1,15 @@
-package server.thn.Member.entity.teamClassification;
+package server.thn.Project.entity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TeamClassification4{
+public class CarType {
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE2")
@@ -21,14 +19,9 @@ public class TeamClassification4{
     @Column(nullable = false)
     private String name;
 
-    @Column
-    private Integer last;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teamClassification3_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private TeamClassification3 teamClassification3;
-
+    public CarType(
+            String name
+    ){
+        this.name = name;
+    }
 }
-
-

@@ -45,24 +45,7 @@ public class MemberDto {
                 member.getId(),
                 member.getEmail(),
                 member.getUsername(),
-                //member.getDepartment().get,
-
-                (
-                        member.getDepartment().getClassification1().getName() + "/"
-                                + member.getDepartment().getClassification2().getName() + "/"
-
-                                + (member.getDepartment().getClassification3().getId().equals(99999L) ?
-                                " " :
-                                member.getDepartment().getClassification3().getName())
-
-                                + (member.getDepartment().getClassification4().getId().equals(99999L) ?
-                                " " :
-                                "/" + member.getDepartment().getClassification4().getName()
-                        )
-
-                ),
-
-
+                member.getDepartment().getDepartmentType().name(),
 
                 member.getContact(),
                 member.getProfileImage()==null?
@@ -103,23 +86,7 @@ public class MemberDto {
                         member.getId(),
                         member.getEmail(),
                         member.getUsername(),
-
-                        (
-                                member.getDepartment().getClassification1().getName() + "/"
-                                        + member.getDepartment().getClassification2().getName() + "/"
-
-                                        + (member.getDepartment().getClassification3().getId().equals(99999L) ?
-                                        " " :
-                                        member.getDepartment().getClassification3().getName())
-
-
-                                        + (member.getDepartment().getClassification4().getId().equals(99999L) ?
-                                        " " :
-                                        "/" + member.getDepartment().getClassification4().getName()
-                                )
-
-                        ),
-
+                        member.getDepartment().getDepartmentType().name(),
 
                         member.getContact(),
                         member.getProfileImage().getImageaddress(),
@@ -137,21 +104,7 @@ public class MemberDto {
                         member.getId(),
                         member.getEmail(),
                         member.getUsername(),
-
-                        (
-                                member.getDepartment().getClassification1().getName() + "/"
-                                        + member.getDepartment().getClassification2().getName() + "/"
-
-                                        + (member.getDepartment().getClassification3().getId().equals(99999L) ?
-                                        " " :
-                                        "/" + member.getDepartment().getClassification3().getName())
-
-                                        + (member.getDepartment().getClassification4().getId().equals(99999L) ?
-                                        " " :
-                                        "/" + member.getDepartment().getClassification4().getName()
-                                )
-
-                        ),
+                        member.getDepartment().getDepartmentType().name(),
 
 
                         member.getContact(),

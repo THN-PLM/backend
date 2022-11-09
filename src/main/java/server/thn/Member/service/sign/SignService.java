@@ -22,7 +22,6 @@ import server.thn.Member.exception.RefreshExpiredException;
 import server.thn.Member.repository.DepartmentRepository;
 import server.thn.Member.repository.MemberRepository;
 import server.thn.Member.repository.RoleRepository;
-import server.thn.Member.repository.classification.*;
 
 @Service
 @RequiredArgsConstructor
