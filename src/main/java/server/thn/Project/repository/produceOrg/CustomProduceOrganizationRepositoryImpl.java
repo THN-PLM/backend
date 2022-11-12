@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import static com.querydsl.core.types.Projections.constructor;
+import static server.thn.Project.entity.QBuyerOrganization.buyerOrganization;
 import static server.thn.Project.entity.QProduceOrganization.produceOrganization;
 
 @Transactional(readOnly = true)
@@ -48,7 +49,8 @@ public class CustomProduceOrganizationRepositoryImpl extends QuerydslRepositoryS
                                  ReadResponse.class,
                                 produceOrganization.id,
                                 produceOrganization.code1,
-                                produceOrganization.code2
+                                produceOrganization.code2,
+                                buyerOrganization.notDeleted
                         ))
                         .from(produceOrganization)
                         .where(predicate)
