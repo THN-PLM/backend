@@ -53,7 +53,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.PUT, "/items/{id}").access("@itemGuard.check(#id)")
 //                .antMatchers(HttpMethod.DELETE, "/items/{id}").access("@itemGuard.check(#id)")
 //
-
+                .antMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
+                .antMatchers(HttpMethod.POST, "/swagger-ui.html").permitAll()
+                .antMatchers(HttpMethod.PUT, "/swagger-ui.html").permitAll()
+                .antMatchers(HttpMethod.POST, "/swagger-ui.html").permitAll()
 
                 .antMatchers(HttpMethod.POST, "/exception/entry-point").permitAll()
                 .antMatchers(HttpMethod.GET, "/exception/entry-point").permitAll()
@@ -63,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/**").authenticated()
 
                 .antMatchers(HttpMethod.POST, "/logout/{id}").permitAll()
-                .antMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
+
 
 
                 .anyRequest().hasAnyRole("ROLE_ADMIN")//멤버의 역할이 관리자인 경우에는 모든 것을 허용
