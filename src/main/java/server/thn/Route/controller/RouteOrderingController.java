@@ -50,7 +50,7 @@ public class RouteOrderingController {
      * @param id
      * @return
      */
-    @CrossOrigin(origins = "https://eci-plm.kro.kr")
+    @CrossOrigin(origins = "https://localhost:3000")
     @GetMapping("/routeByProj/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response readRouteByItem(@PathVariable Long id) {
