@@ -14,8 +14,8 @@ public class RoutePreset {
     public String[][] projectRouteName = {
 
             {
-                    "All도 Registration",
-                    "All도 Complete",
+                    "All Do Registration",
+                    "All Do Complete",
                     "Proto Registration",
                     "Proto Complete",
                     "P1 Registration",
@@ -25,27 +25,35 @@ public class RoutePreset {
                     "M Registration",
                     "M Complete"
             },
-            //type 0 - 선행개발 , 양산개발
+            //type 0 - 양산 개발
+
+            {
+                    "초도",
+                    "개선"
+            },
+
+            // type 1 - 선행 개발
     };
 
     public String[][] projectRouteType = {
-            {"TIME", "TIME", "TIME", "TIME", "TIME", "TIME", "TIME", "TIME", "TIME", "TIME"}
-
+            {"TIME", "TIME", "TIME", "TIME", "TIME", "TIME", "TIME", "TIME", "TIME", "TIME"},
+            {"TIME", "TIME"}
 
     };
 
     public String[][] projectRouteTypeModule = {
-
-            // 타입이 속하는 모듈명
-            {"TIME", "TIME", "TIME", "TIME", "TIME", "TIME", "TIME", "TIME", "TIME", "TIME"}
+            {"PROJECT", "PROJECT", "PROJECT", "PROJECT", "PROJECT", "PROJECT", "PROJECT", "PROJECT", "PROJECT", "PROJECT"},
+            {"PROJECT", "PROJECT"}
     };
 
+
+    // ==================================== REVIEW ==================================== //
     /**
      * 리뷰 대상인 타입 아이디를 저장
      */
-    public String[] reviewRouteList = {"4", "5", "6", "12", "16", "17", "19", "23", "25"};
-    public ArrayList<String> reviewRouteArrList = new ArrayList<>(Arrays.asList(reviewRouteList));
+    public String[] reviewRouteList = {};
 
+    public ArrayList<String> reviewRouteArrList = new ArrayList<>(Arrays.asList(reviewRouteList));
 }
 
 

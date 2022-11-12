@@ -36,4 +36,3 @@ public class BuyerOrganization {
         this.code2 = code2;
     }
 }
-
