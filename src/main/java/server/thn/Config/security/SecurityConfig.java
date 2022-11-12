@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/exception/entry-point").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/exception/entry-point").permitAll()
 
-                .antMatchers(HttpMethod.GET, "/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/**").permitAll()
 
                 .antMatchers(HttpMethod.POST, "/logout/{id}").permitAll()
 
