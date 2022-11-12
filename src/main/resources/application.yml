@@ -49,3 +49,7 @@ spring:
   http.encoding.charset: UTF-8
   http.encoding.enabled: true
   http.encoding.force: true
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

@@ -1,4 +1,5 @@
-package server.thn.Project.repository.carType;
+package server.thn.Project.repository.produceOrg;
+
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -11,73 +12,84 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
 import server.thn.Project.dto.ReadCondition;
-import server.thn.Project.dto.carType.CarTypeReadCondition;
-import server.thn.Project.dto.carType.CarTypeReadResponse;
-import server.thn.Project.entity.CarType;
+import server.thn.Project.dto.ReadResponse;
+import server.thn.Project.entity.ProjectType;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
 import static com.querydsl.core.types.Projections.constructor;
-import static server.thn.Project.entity.QCarType.carType;
+import static server.thn.Project.entity.QProduceOrganization.produceOrganization;
 
 @Transactional(readOnly = true)
-public class CustomCarTypeRepositoryImpl extends QuerydslRepositorySupport implements CustomCarTypeRepository {
+public class CustomProduceOrganizationRepositoryImpl extends QuerydslRepositorySupport implements CustomProduceOrganizationRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public CustomCarTypeRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
-        super(CarType.class);
+    public CustomProduceOrganizationRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
+        super(ProjectType.class);
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
     @Override
-    public Page<CarTypeReadResponse> findAllByCondition( CarTypeReadCondition cond) {
+    public Page<ReadResponse> findAllByCondition( ReadCondition cond) {
         Pageable pageable = PageRequest.of(cond.getPage(), cond.getSize());
         Predicate predicate = createPredicate(cond);
         return new PageImpl<>(fetchAll(predicate, pageable), pageable, fetchCount(predicate));
     }
 
 
-    private List<CarTypeReadResponse> fetchAll(Predicate predicate, Pageable pageable) {
+    private List< ReadResponse> fetchAll(Predicate predicate, Pageable pageable) {
         return getQuerydsl().applyPagination(
                 pageable,
                 jpaQueryFactory
                         .select(constructor(
-                                CarTypeReadResponse.class,
-                                carType.id,
-                                carType.name
+                                 ReadResponse.class,
+                                produceOrganization.id,
+                                produceOrganization.code1,
+                                produceOrganization.code2
                         ))
-                        .from(carType)
+                        .from(produceOrganization)
                         .where(predicate)
-                        .orderBy(carType.id.desc())
+                        .orderBy(produceOrganization.id.desc())
         ).fetch();
     }
 
     private Long fetchCount(Predicate predicate) {
         return jpaQueryFactory.select(
-                        carType.count()
-                ).from(carType).
+                        produceOrganization.count()
+                ).from(produceOrganization).
                 where(predicate).fetchOne();
     }
 
-    private Predicate createPredicate(CarTypeReadCondition cond) {
+    private Predicate createPredicate( ReadCondition cond) {
         return new BooleanBuilder()
-                .and(orConditionsByEqNames(cond.getName()));
+                .and(orConditionsByEqNames(cond.getName()))
+                .and(orConditionsByNotDeleted( ))
+                ;
     }
+
+    private Predicate orConditionsByNotDeleted( ) {
+        return produceOrganization.notDeleted.isTrue();
+    }
+
 
     private Predicate orConditionsByEqNames(String word) {
         List<String> words = new ArrayList<>();
         words.add(word);
-        return orConditions(words, carType.name::containsIgnoreCase);
+        return orConditions(words, produceOrganization.code1::containsIgnoreCase);
+        //검색어로 넘어온 단어가 이름에 contain (포함) 되어있는지
     }
 
-    private <T> Predicate orConditions(List<T> values, Function<T, BooleanExpression> term) { // 11
+
+    private <T> Predicate orConditions(List<T> values, Function<T, BooleanExpression> term) {
         return values.stream()
                 .map(term)
                 .reduce(BooleanExpression::or)
                 .orElse(null);
     }
+
+
 
 }

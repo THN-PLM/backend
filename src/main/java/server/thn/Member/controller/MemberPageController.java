@@ -1,6 +1,7 @@
 package server.thn.Member.controller;
 
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,7 @@ public class MemberPageController{
 
     @CrossOrigin(origins = "https://localhost:3000")
     @GetMapping("/members/page")
+    @ApiOperation(value = "member page GET", notes = "멤버 리스트 페이징 GET")
     public Page<MemberDto> paging(@PageableDefault(size=5)
                                   @SortDefault.SortDefaults({
                                           @SortDefault(
