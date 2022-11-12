@@ -6,5 +6,5 @@ import server.thn.Project.entity.ProjectTypeEnum;
 
 public interface ProjectTypesRepository extends JpaRepository<ProjectType, Long> {
 
-    ProjectType findByProjectTypeEnum(ProjectTypeEnum projectTypeEnum);
+    ProjectType findByProjectType(ProjectTypeEnum projectTypeEnum);
 }
