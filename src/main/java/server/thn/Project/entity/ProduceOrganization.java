@@ -1,6 +1,5 @@
 package server.thn.Project.entity;
 
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +11,8 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProduceOrganization {
+
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE2")
     @SequenceGenerator(name="SEQUENCE2", sequenceName="SEQUENCE2", allocationSize=1)
     private Long id;
@@ -31,9 +30,11 @@ public class ProduceOrganization {
 
     public ProduceOrganization(
             String code1,
-            String code2
+            String code2,
+            ProduceOrganizationClassification produceOrganizationClassification
     ){
         this.code1 = code1;
         this.code2 = code2;
+        this.department = produceOrganizationClassification;
     }
 }
