@@ -49,8 +49,7 @@ public class CustomBuyerOrganizationRepositoryImpl extends QuerydslRepositorySup
                                 ReadResponse.class,
                                 buyerOrganization.id,
                                 buyerOrganization.code1,
-                                buyerOrganization.code2,
-                                buyerOrganization.notDeleted
+                                buyerOrganization.code2
                         ))
                         .from(buyerOrganization)
                         .where(predicate)

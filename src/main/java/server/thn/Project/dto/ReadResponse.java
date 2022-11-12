@@ -9,5 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReadResponse{
     private Long id;
-    private String name;
+    private String code1;
+    private String code2;
 }
