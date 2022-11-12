@@ -19,9 +19,18 @@ public class CarType {
     @Column(nullable = false)
     private String name;
 
+    @Column
+    private boolean notDeleted;
+
+    public void setNotDeleted(boolean notDeleted) {
+        this.notDeleted = notDeleted;
+    }
+
+
     public CarType(
             String name
     ){
         this.name = name;
+        this.notDeleted = true;
     }
 }

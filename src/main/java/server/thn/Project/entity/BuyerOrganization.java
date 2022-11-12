@@ -28,11 +28,19 @@ public class BuyerOrganization {
     @Column(nullable = false)
     private String code2;
 
+    @Column
+    private boolean notDeleted;
+
+    public void setNotDeleted(boolean notDeleted) {
+        this.notDeleted = notDeleted;
+    }
+
     public BuyerOrganization(
             String code1,
             String code2
     ){
         this.code1 = code1;
         this.code2 = code2;
+        this.notDeleted = true;
     }
 }

@@ -28,6 +28,13 @@ public class ProduceOrganization {
     @Column(nullable = false)
     private String code2;
 
+    @Column
+    private boolean notDeleted;
+
+    public void setNotDeleted(boolean notDeleted) {
+        this.notDeleted = notDeleted;
+    }
+
     public ProduceOrganization(
             String code1,
             String code2,
@@ -36,5 +43,6 @@ public class ProduceOrganization {
         this.code1 = code1;
         this.code2 = code2;
         this.department = produceOrganizationClassification;
+        this.notDeleted = true;
     }
 }
