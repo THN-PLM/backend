@@ -49,7 +49,7 @@ public class CustomMemberRepositoryImpl extends QuerydslRepositorySupport implem
                                 member.id,
                                 member.email,
                                 member.username,
-                                member.department,
+                                member.department.departmentType,
                                 member.contact,
                                 profileImage.imageaddress
                         ))
