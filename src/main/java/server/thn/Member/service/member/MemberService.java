@@ -107,7 +107,7 @@ public class MemberService {
                 mem -> mem.getId()
         ).collect(Collectors.toList());
 
-        if(name!=null){
+        if(name!=null&&name.length()>0&&!name.contains("\n")){
             totalSize+=memberRepository.findByUsernameContainingIgnoreCase(
                     name
             ).size();
