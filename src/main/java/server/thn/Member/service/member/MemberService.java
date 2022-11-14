@@ -72,7 +72,12 @@ public class MemberService {
 
     // dto list 로 반환
     public List<MemberDto> memberDtoConvert(@Nullable String search) {
-        return searchMemberWithKeywords( search ).stream().map(
+        if(search!=null&&search.length()>0&&!search.contains("\n")){
+            return searchMemberWithKeywords( search ).stream().map(
+                    mem -> MemberDto.toDto(mem, defaultImageAddress)
+            ).collect(Collectors.toList());
+        }
+        return memberRepository.findAll().stream().map(
                 mem -> MemberDto.toDto(mem, defaultImageAddress)
         ).collect(Collectors.toList());
     }
