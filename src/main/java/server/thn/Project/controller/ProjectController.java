@@ -12,11 +12,9 @@ import server.thn.File.repository.AttachmentTagRepository;
 import server.thn.File.service.FileService;
 import server.thn.Member.repository.MemberRepository;
 import server.thn.Project.dto.ProjectCreateRequest;
-import server.thn.Project.dto.ProjectUpdateRequest;
-import server.thn.Project.entity.BuyerOrganization;
 import server.thn.Project.repository.ProjectAttachmentRepository;
 import server.thn.Project.repository.ProjectRepository;
-import server.thn.Project.repository.ProjectTypesRepository;
+import server.thn.Project.repository.ProjectTypeRepository;
 import server.thn.Project.repository.buyer.BuyerOrganizationRepository;
 import server.thn.Project.repository.carType.CarTypeRepository;
 import server.thn.Project.repository.produceOrg.ProduceOrganizationRepository;
@@ -33,7 +31,7 @@ import javax.validation.Valid;
 public class ProjectController {
 
     private final MemberRepository memberRepository;
-    private final ProjectTypesRepository projectTypeRepository;
+    private final ProjectTypeRepository projectTypeRepository;
     private final ProjectRepository projectRepository;
     private final BuyerOrganizationRepository buyerOrganizationRepository;
     private final ProduceOrganizationRepository produceOrganizationRepository;
@@ -48,41 +46,43 @@ public class ProjectController {
     private String defaultImageAddress;
 
     private final ProjectService projectService;
-//
-//    @CrossOrigin(origins = "https://localhost:3000")
-//    @PostMapping("/project/temp")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @AssignMemberId
-//    public Response tempCreate(
-//            @Valid @ModelAttribute
-//                    ProjectCreateRequest req
-//    ) {
-//
-//        return Response.success(
-//
-//                projectService.tempCreate(req));
-//    }
-//
-//
-//    /**
-//     * 프로젝트 생성 (찐 저장)
-//     *
-//     * @param req
-//     * @return 200 (success)
-//     */
-//    @CrossOrigin(origins = "https://localhost:3000")
-//    @PostMapping("/project")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @AssignMemberId
-//    public Response create(
-//            @Valid @ModelAttribute
-//                    ProjectCreateRequest req
-//    ) {
-//
-//        return Response.success(
-//
-//                projectService.create(req));
-//    }
+
+    @CrossOrigin(origins = "https://localhost:3000")
+    @PostMapping("/project/temp")
+    @ResponseStatus(HttpStatus.CREATED)
+    @AssignMemberId
+    @AssignModifierId
+    public Response tempCreate(
+            @Valid @ModelAttribute
+                    ProjectCreateRequest req
+    ) {
+
+        return Response.success(
+
+                projectService.tempCreate(req));
+    }
+
+
+    /**
+     * 프로젝트 생성 (찐 저장)
+     *
+     * @param req
+     * @return 200 (success)
+     */
+    @CrossOrigin(origins = "https://localhost:3000")
+    @PostMapping("/project")
+    @ResponseStatus(HttpStatus.CREATED)
+    @AssignMemberId
+    @AssignModifierId
+    public Response create(
+            @Valid @ModelAttribute
+                    ProjectCreateRequest req
+    ) {
+
+        return Response.success(
+
+                projectService.create(req));
+    }
 //
 //    /**
 //     * 특정 프로젝트 수정

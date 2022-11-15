@@ -131,6 +131,7 @@ public class Project extends EntityDate {
 //    private List<Product> products = new ArrayList<>();
 
     public Project(
+            ProjectType projectType,
             String name,
             String projectNumber,
 
@@ -156,7 +157,7 @@ public class Project extends EntityDate {
             Boolean tempsave,
             Boolean readonly,
 
-            ProjectType projectType,
+
             ProduceOrganization produceOrganization,
 
             BuyerOrganization buyerOrganization,

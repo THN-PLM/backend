@@ -52,7 +52,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.POST, "/items/temp").authenticated()
 //                .antMatchers(HttpMethod.PUT, "/items/{id}").access("@itemGuard.check(#id)")
 //                .antMatchers(HttpMethod.DELETE, "/items/{id}").access("@itemGuard.check(#id)")
-//
+
+                .antMatchers(HttpMethod.POST, "/project").authenticated()
+                .antMatchers(HttpMethod.POST, "/project/temp").authenticated()
+                .antMatchers(HttpMethod.GET, "/project/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/project/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT, "/project/{id}").authenticated()
+
                 .antMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/swagger-ui.html").permitAll()
                 .antMatchers(HttpMethod.PUT, "/swagger-ui.html").permitAll()

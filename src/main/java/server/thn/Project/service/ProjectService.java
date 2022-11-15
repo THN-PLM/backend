@@ -1,34 +1,27 @@
 package server.thn.Project.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import server.thn.Common.dto.response.IdResponse;
 import server.thn.File.repository.AttachmentTagRepository;
 import server.thn.File.service.FileService;
 import server.thn.Member.repository.MemberRepository;
-import server.thn.Project.entity.BuyerOrganization;
+import server.thn.Project.dto.ProjectCreateRequest;
+import server.thn.Project.entity.Project;
+import server.thn.Project.entity.ProjectAttachment;
 import server.thn.Project.repository.ProjectAttachmentRepository;
 import server.thn.Project.repository.ProjectRepository;
-import server.thn.Project.repository.ProjectTypesRepository;
+import server.thn.Project.repository.ProjectTypeRepository;
 import server.thn.Project.repository.buyer.BuyerOrganizationRepository;
 import server.thn.Project.repository.carType.CarTypeRepository;
 import server.thn.Project.repository.produceOrg.ProduceOrganizationRepository;
 import server.thn.Route.repository.RouteOrderingRepository;
 import server.thn.Route.repository.RouteProductRepository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @RequiredArgsConstructor
@@ -38,7 +31,7 @@ public class ProjectService {
 
 
     private final MemberRepository memberRepository;
-    private final ProjectTypesRepository projectTypeRepository;
+    private final ProjectTypeRepository projectTypeRepository;
     private final ProjectRepository projectRepository;
     private final ProduceOrganizationRepository produceOrganizationRepository;
     private final BuyerOrganizationRepository buyerOrganizationRepository;
@@ -52,68 +45,72 @@ public class ProjectService {
     @Value("${default.image.address}")
     private String defaultImageAddress;
 
-//    @Transactional
-//    public ProjectTempCreateUpdateResponse tempCreate(ProjectTemporaryCreateRequest req) {
-//
-//        Project project = projectRepository.save(
-//                ProjectTemporaryCreateRequest.toEntity(
-//                        req,
-//                        memberRepository,
-//                        newItemRepository,
-//                        projectTypeRepository,
-//                        projectLevelRepository,
-//                        produceOrganizationRepository,
-//                        clientOrganizationRepository,
-//                        carTypeRepository,
-//                        attachmentTagRepository,
-//                        routeOrderingRepository
-//                )
-//        );
-//        if(!(req.getAttachments()==null || req.getAttachments().size()==0)) {
-//            uploadAttachments(project.getProjectAttachments(), req.getAttachments());
-//        }
-//
-//        return new ProjectTempCreateUpdateResponse(project.getId());
-//    }
-//
-//
-//    @Transactional
-//    public ProjectCreateUpdateResponse create(ProjectCreateRequest req) {
-//
-//        Project project = projectRepository.save(
-//                ProjectCreateRequest.toEntity(
-//                        req,
-//                        memberRepository,
-//                        newItemRepository,
-//                        projectTypeRepository,
-//                        projectLevelRepository,
-//                        produceOrganizationRepository,
-//                        clientOrganizationRepository,
-//                        carTypeRepository,
-//                        attachmentTagRepository,
-//                        routeOrderingRepository
-//                )
-//        );
-//        if(!(req.getAttachments()==null || req.getAttachments().size()==0)) {
-//            uploadAttachments(project.getProjectAttachments(), req.getAttachments());
-//        }
-//
-//        Long routeId = -1L;
-//        if(routeOrderingRepository.findByProjectOrderByIdAsc(project).size()>0) {
-//            RouteOrdering routeOrdering =
-//                    routeOrderingRepository.findByProjectOrderByIdAsc(project)
-//                            .get
-//                                    (
-//                                            routeOrderingRepository.findByProjectOrderByIdAsc(project).size()-1
-//                                    );
-//            routeId = routeOrdering.getId();
-//        }
-//
-//        saveTrueAttachment(project);
-//
-//        return new ProjectCreateUpdateResponse(project.getId(), routeId);
-//    }
-//
+    private void uploadAttachments(List<ProjectAttachment> attachments, List<MultipartFile> filedAttachments) {
+        // 실제 이미지 파일을 가지고 있는 Multipart 파일을
+        // 파일이 가지는 unique name 을 파일명으로 해서 파일저장소 업로드
+        IntStream.range(0, attachments.size())
+                .forEach(
+                        i -> fileService.upload
+                                (
+                                        filedAttachments.get(i),
+                                        attachments.get(i).getUniqueName()
+                                )
+                );
+    }
+
+    @Transactional
+    public IdResponse tempCreate(ProjectCreateRequest req) {
+
+        Project project = projectRepository.save(
+                ProjectCreateRequest.toTempEntity(
+                        req,
+                        projectTypeRepository,
+                        memberRepository,
+                        produceOrganizationRepository,
+                        buyerOrganizationRepository,
+                        carTypeRepository,
+                        attachmentTagRepository
+                )
+        );
+        if(!(req.getAttachments()==null || req.getAttachments().size()==0)) {
+            uploadAttachments(project.getProjectAttachments(), req.getAttachments());
+        }
+
+        return new IdResponse(project.getId());
+    }
+
+    private void saveTrueAttachment(Project target) {
+        projectAttachmentRepository.findByProject(target).
+                forEach(
+                        i->i.setSave(true)
+                );
+
+    }
+
+    @Transactional
+    public IdResponse create(ProjectCreateRequest req) {
+
+        Project project = projectRepository.save(
+                ProjectCreateRequest.toSaveEntity(
+                        req,
+                        projectTypeRepository,
+                        memberRepository,
+                        produceOrganizationRepository,
+                        buyerOrganizationRepository,
+                        carTypeRepository,
+                        attachmentTagRepository
+                )
+        );
+
+        if(!(req.getAttachments()==null || req.getAttachments().size()==0)) {
+            uploadAttachments(project.getProjectAttachments(), req.getAttachments());
+        }
+
+        saveTrueAttachment(project);
+
+        return new IdResponse(project.getId());
+    }
+
 //
 //    @Transactional
 //
