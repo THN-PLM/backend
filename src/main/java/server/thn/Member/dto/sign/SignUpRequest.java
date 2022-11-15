@@ -56,7 +56,8 @@ public class SignUpRequest {
 
                             req.getPositionId().stream().map(
                                     id ->
-                                            roleRepository.findById(id).orElseThrow(RoleNotFoundException::new)
+                                            roleRepository.findById(id).orElseThrow(
+                                                    RoleNotFoundException::new)
                             ).collect(Collectors.toList()),
 
                             new ProfileImage(

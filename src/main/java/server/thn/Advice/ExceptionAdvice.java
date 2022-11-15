@@ -13,9 +13,7 @@ import server.thn.File.exception.AttachmentNotFoundException;
 import server.thn.File.exception.AttachmentTagNotFoundException;
 import server.thn.File.exception.FileUploadFailureException;
 import server.thn.Member.exception.*;
-import server.thn.Project.exception.CarTypeNotFoundException;
-import server.thn.Project.exception.ProduceOrganizationNotFoundException;
-import server.thn.Project.exception.ProjectNotFoundException;
+import server.thn.Project.exception.*;
 
 @RestControllerAdvice
 @Slf4j
@@ -65,54 +63,55 @@ public class ExceptionAdvice {
     @ExceptionHandler(AttachmentNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response AttachmentNotFoundException() {
-        return Response.failure(404, "AttachmentNotFoundException.");
+        return Response.failure(404, "Attachment Not Found .");
     }
 
     @ExceptionHandler(FileUploadFailureException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response FileUploadFailureException() {
-        return Response.failure(404, "FileUploadFailureException");
+        return Response.failure(404, "File Upload Failure ");
     }
 
     @ExceptionHandler(AttachmentTagNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response AttachmentTagNotFoundException() {
-        return Response.failure(404, "AttachmentTagNotFoundException");
+        return Response.failure(404, "Attachment Tag Not Found ");
     }
 
     @ExceptionHandler(CarTypeNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response CarTypeNotFoundException() {
-        return Response.failure(404, "CarTypeNotFoundException");
+        return Response.failure(404, "Car Type Not Found ");
     }
-    @ExceptionHandler(ProduceOrganizationNotFoundException.class)
+
+    @ExceptionHandler(BuyerOrganizationNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Response ProduceOrganizationNotFoundException() {
-        return Response.failure(404, "ProduceOrganizationNotFoundException");
+    public Response BuyerOrganizationNotFoundException() {
+        return Response.failure(404, "Buyer Organization Not Found ");
     }
 
     @ExceptionHandler(MemberEmailAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response MemberEmailAlreadyExistsException() {
-        return Response.failure(400, "MemberEmailAlreadyExistsException");
+        return Response.failure(400, "Member Email Already Exists ");
     }
 
     @ExceptionHandler(MemberNotAssignedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response MemberNotAssignedException() {
-        return Response.failure(404, "MemberNotAssignedException");
+        return Response.failure(404, "Member Not Assigned ");
     }
 
     @ExceptionHandler(MemberNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response MemberNotFoundException() {
-        return Response.failure(404, "MemberNotFoundException");
+        return Response.failure(404, "Member Not Found ");
     }
 
     @ExceptionHandler(MemberOverAssignedException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response MemberOverAssignedException() {
-        return Response.failure(404, "MemberOverAssignedException");
+        return Response.failure(404, "Member Over Assigned ");
     }
 
     @ExceptionHandler(PasswordNotValidateException.class)
@@ -145,5 +144,14 @@ public class ExceptionAdvice {
         return Response.failure(400,
                 "png jpg only - 이미지(png,jpg) 형식의 파일을 업로드해주세요.");
     }
+
+    @ExceptionHandler(ProjectTypeNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response ProjectTypeNotFoundException(ProjectTypeNotFoundException e) {
+        //log.info("e = {}", e.getMessage());
+        return Response.failure(400,
+                "Project Type Not Found ");
+    }
+
 
 }

@@ -3,6 +3,8 @@ package server.thn.Project.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import server.thn.Member.entity.Member;
 import server.thn.Project.entity.Project;
 
@@ -16,12 +18,17 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     List<Project> findByMember(Member member);
 
-//    Page<Project> findByNameContainingIgnoreCaseOrProjectNumberContainingIgnoreCaseOrLifecycleContainingIgnoreCaseOrClientItemNumberContainingIgnoreCase
-//            (String name,
-//             String projectNumber,
-//             String lifecycle,
-//             String clientItemNumber,
-//             Pageable pageable
-//            );
+    List<Project> findByNameContainingIgnoreCaseOrProjectNumberContainingIgnoreCaseOrLifecycleContainingIgnoreCase
+            (String name,
+             String projectNumber,
+             String lifecycle
+            );
+
+    @Query(
+            "select i from Project " +
+                    "i where i IN (:projects)"
+    )
+    Page<Project> findByProjects(@Param("projects") List<Project> projects, Pageable pageable);
+
 
 }

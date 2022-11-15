@@ -36,7 +36,7 @@ public class MemberPageController{
 
     @CrossOrigin(origins = "https://localhost:3000")
     @GetMapping("/members/page")
-    @ApiOperation(value = "member page GET", notes = "멤버 리스트 페이징 GET")
+    //@ApiOperation(value = "member page GET", notes = "멤버 리스트 페이징 GET")
     public Page<MemberDto> paging(@PageableDefault(size=5)
                                   @SortDefault.SortDefaults({
                                           @SortDefault(
@@ -44,7 +44,7 @@ public class MemberPageController{
                                                   direction = Sort.Direction.DESC)
                                   })
                                           Pageable pageRequest,
-                                  @RequestParam(value = "keyWord",  required=false) String keyWord,
+                                  //@RequestParam(value = "keyWord",  required=false) String keyWord,
                                   @RequestParam(value ="name", required=false) String name) {
 
         return memberService.returnCustomPagingProject(name, pageRequest);
