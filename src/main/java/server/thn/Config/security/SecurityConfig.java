@@ -62,6 +62,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/project/temp/{id}").authenticated()
                 .antMatchers(HttpMethod.PUT, "/project/temp/end/{id}").authenticated()
 
+
+                //route
+                .antMatchers(HttpMethod.POST, "/route/project").authenticated()
+                .antMatchers(HttpMethod.POST, "/route/item").authenticated()
+
+                .antMatchers(HttpMethod.GET, "/route/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/routeByProj/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/route/reject-possible/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/route/members/{id}").authenticated()
+
+                .antMatchers(HttpMethod.PUT, "/approveRoute/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT, "/rejectRoute/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT, "/addMember").authenticated()
+
+                .antMatchers(HttpMethod.DELETE, "/exception/entry-point").permitAll()
+
+
                 .antMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/swagger-ui.html").permitAll()
                 .antMatchers(HttpMethod.PUT, "/swagger-ui.html").permitAll()

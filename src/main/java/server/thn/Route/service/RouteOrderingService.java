@@ -188,9 +188,6 @@ public class RouteOrderingService {
 
         List<String> typeList = new ArrayList<>();
 
-        //아이템 타입에따라서 라우트 타입이 선택된다.
-
-        // TODO 라벨 아니고 ITEM.ROUTE_TYPE.ID 로 선택해준다
         Integer routeType = ProjectTypeEnum.valueOf(
                 projectRepository.findById(id).orElseThrow(ProjectTypeRequiredException::new)
                         .getProjectType().getProjectType().name()
@@ -200,7 +197,6 @@ public class RouteOrderingService {
 
         for (Object type : routeProduct) {
             typeList.add(type.toString());
-
         }
         return typeList;
 
@@ -267,6 +263,7 @@ public class RouteOrderingService {
 
             RouteProduct routeProduct1 =
                     routeProductRepository.save(routeProduct);
+
             System.out.println(routeProduct1.getRoute_name());
             System.out.println(routeProduct1.getMembers().get(0).getMember());
             System.out.println(routeProduct1.getMembers().get(0).getRouteProduct());

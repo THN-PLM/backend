@@ -27,23 +27,23 @@ public class RouteProductCreateRequest{
             MemberRepository memberRepository,
             RouteTypeRepository routeTypeRepository
 
-    ) {List<RouteProduct> willBeSavedRouteProductList
+    ) {
+        List<RouteProduct> willBeSavedRouteProductList
             = new ArrayList<>();
 
-        List<String> routeProductName = List.of((routePreset.projectRouteName[0]));
-        List<String> routeProductType = List.of((routePreset.projectRouteType[0]));
-        List<String> routeProductTypeModule = List.of((routePreset.projectRouteTypeModule[0]));
-        //만들어져야 하는 객체는 타입 길이에서 complete 뺀 만큼
+        Integer projectTypeId = Math.toIntExact(routeOrdering.getProject().getProjectType().getId());
+        List<String> routeProductName = List.of((routePreset.projectRouteName[projectTypeId]));
+        List<String> routeProductType = List.of((routePreset.projectRouteType[projectTypeId]));
+        List<String> routeProductTypeModule = List.of((routePreset.projectRouteTypeModule[projectTypeId]));
+
         Integer neededRouteProductCnt = routeProductType.size()-1; //프로젝트는 오로지 한개
 
         // 1) request RouteProduct는 별도 생성 (코멘트 및 멤버 지정 이슈)
 
-        //request하는 사람은 한 명인데, 리스트로 만드는 이유는 routeProduct에선 member을 List로 받기 때문이지
         List<Member> member1 = new ArrayList<>();
 
         member1.add(memberRepository.findById(req.getMemberId())
                 .orElseThrow(MemberNotFoundException::new));
-
 
         RouteProduct requestRouteProduct = new RouteProduct(
                 0,
@@ -52,7 +52,7 @@ public class RouteProductCreateRequest{
                 (String) routeProductName.get(0),
 
                 //우선 NAME 으로 찾아와서
-                routeTypeRepository.findByName((String) routeProductType.get(0)).
+                routeTypeRepository.findByName(routeProductType.get(0)).
                         stream().filter(
                                 i-> i.getModule().equals(
                                         //그것이 지정된 모듈이랑 SAME 한 라우트 타입 최종 고르기

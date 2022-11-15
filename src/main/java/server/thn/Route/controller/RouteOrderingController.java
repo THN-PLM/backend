@@ -19,14 +19,6 @@ public class RouteOrderingController {
     private final RouteOrderingService newRouteService;
 
 
-    @GetMapping("/route")
-    @ResponseStatus(HttpStatus.OK)
-    public Response readAll(
-            @Valid RouteOrderingReadCondition cond
-    ) {
-        return Response.success(newRouteService.readAll(cond));
-    }
-
     @PostMapping("/route/project")
     @ResponseStatus(HttpStatus.CREATED)
     @AssignMemberId
