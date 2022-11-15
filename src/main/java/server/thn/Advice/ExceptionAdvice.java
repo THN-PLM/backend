@@ -63,19 +63,19 @@ public class ExceptionAdvice {
     @ExceptionHandler(AttachmentNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response AttachmentNotFoundException() {
-        return Response.failure(404, "AttachmentNotFoundException.");
+        return Response.failure(404, "Attachment Not Found .");
     }
 
     @ExceptionHandler(FileUploadFailureException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response FileUploadFailureException() {
-        return Response.failure(404, "FileUploadFailureException");
+        return Response.failure(404, "File Upload Failure ");
     }
 
     @ExceptionHandler(AttachmentTagNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response AttachmentTagNotFoundException() {
-        return Response.failure(404, "AttachmentTagNotFoundException");
+        return Response.failure(404, "Attachment Tag Not Found ");
     }
 
     @ExceptionHandler(CarTypeNotFoundException.class)
