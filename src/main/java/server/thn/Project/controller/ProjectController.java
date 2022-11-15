@@ -127,52 +127,50 @@ public class ProjectController {
 //        return Response.success();
 //    }
 //
-//    @GetMapping("/project/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public Response read(@PathVariable Long id) {
-//        return Response.success(projectService.read(id));
-//    }
-//
-//    // 10/28 - delete , drop , pending API
-//
-//    // project/delete/{id}
-//
-//    @CrossOrigin(origins = "https://localhost:3000")
-//    @PutMapping("/project-delete/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    @AssignModifierId //수정자 추가
-//    public Response deleted(
-//            @PathVariable Long id
-//    ) {
-//
-//        return Response.success(projectService.deleted(id));
-//    }
-//
-//    // project/drop/{id}
-//
-//    @CrossOrigin(origins = "https://localhost:3000")
-//    @PutMapping("/project-drop/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    @AssignModifierId //수정자 추가
-//    public Response drop(
-//            @PathVariable Long id
-//    ) {
-//
-//        return Response.success(projectService.drop(id ));
-//    }
-//
-//    // project/pending/{id}
-//
-//    @CrossOrigin(origins = "https://localhost:3000")
-//    @PutMapping("/project-pending/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    @AssignModifierId //수정자 추가
-//    public Response pending(
-//            @PathVariable Long id
-//    ) {
-//
-//        return Response.success(projectService.pending(id ));
-//    }
+    @GetMapping("/project/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Response read(@PathVariable Long id) {
+        return Response.success(projectService.read(id));
+    }
+
+    // delete , drop , pending API
+
+    @CrossOrigin(origins = "https://localhost:3000")
+    @PutMapping("/project-delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @AssignModifierId //수정자 추가
+    public Response deleted(
+            @PathVariable Long id
+    ) {
+
+        return Response.success(projectService.deleted(id));
+    }
+
+    // project/drop/{id}
+
+    @CrossOrigin(origins = "https://localhost:3000")
+    @PutMapping("/project-drop/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @AssignModifierId //수정자 추가
+    public Response drop(
+            @PathVariable Long id
+    ) {
+
+        return Response.success(projectService.drop(id ));
+    }
+
+    // project/pending/{id}
+
+    @CrossOrigin(origins = "https://localhost:3000")
+    @PutMapping("/project-pending/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @AssignModifierId //수정자 추가
+    public Response pending(
+            @PathVariable Long id
+    ) {
+
+        return Response.success(projectService.pending(id ));
+    }
 
 
 }

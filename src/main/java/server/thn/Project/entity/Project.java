@@ -123,6 +123,19 @@ public class Project extends EntityDate {
     @Column
     private char revision;
 
+    // 삭제
+    @Column
+    private boolean deleted;
+
+    // pending
+    @Column
+    private boolean pending;
+
+    // drop
+    @Column
+    private boolean dropped;
+
+
 //    @OneToMany(
 //            mappedBy = "project",
 //            cascade = CascadeType.PERSIST,
@@ -436,5 +449,27 @@ public class Project extends EntityDate {
 
     }
 
+    // drop pending delete
+
+    public void updateLifeCycleWhenAllTheItemComplete() {
+        this.lifecycle = "COMPLETE";
+    }
+
+    // update deleted
+    public void updateDeleted(){
+        this.deleted=!this.deleted;
+    }
+
+    // update drop
+    public void updateDrop(){
+        this.dropped=!this.dropped;
+        this.lifecycle = "DROP";
+    }
+
+    // update pending
+    public void updatePending(){
+        this.pending= !this.pending;
+        this.lifecycle = "PENDING";
+    }
 
 }

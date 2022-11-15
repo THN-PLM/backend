@@ -116,15 +116,13 @@ public class MemberService {
             totalSize+=memberRepository.findByUsernameContainingIgnoreCase(
                     name
             ).size();
-        }else{
+        }
+        else{
             totalSize+=memberRepository.findAll().size();
         }
 
         List<MemberDto> content = memberDtoConvert(name);
-        System.out.println("content : " + content.size() + "\n\n\n\n\n");
-        for(MemberDto memberDto : content){
-            System.out.println("hi :  " + memberDto.getUsername()+ "\n\n\n\n\n");
-        }
+
         return new CustomPageImpl<>(content,pageRequest, totalSize, indexes, ids ,totalSize);
     }
 

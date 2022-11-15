@@ -1,17 +1,25 @@
 package server.thn.Project.service;
 
+import com.sun.istack.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import server.thn.Common.dto.MemberIdReq;
 import server.thn.Common.dto.response.IdResponse;
 import server.thn.File.repository.AttachmentTagRepository;
 import server.thn.File.service.FileService;
+import server.thn.Member.entity.Member;
+import server.thn.Member.exception.MemberNotFoundException;
 import server.thn.Member.repository.MemberRepository;
 import server.thn.Project.dto.ProjectCreateRequest;
+import server.thn.Project.dto.ProjectDto;
 import server.thn.Project.entity.Project;
 import server.thn.Project.entity.ProjectAttachment;
+import server.thn.Project.exception.ProjectNotFoundException;
 import server.thn.Project.repository.ProjectAttachmentRepository;
 import server.thn.Project.repository.ProjectRepository;
 import server.thn.Project.repository.ProjectTypeRepository;
@@ -21,14 +29,15 @@ import server.thn.Project.repository.produceOrg.ProduceOrganizationRepository;
 import server.thn.Route.repository.RouteOrderingRepository;
 import server.thn.Route.repository.RouteProductRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class ProjectService {
-
 
     private final MemberRepository memberRepository;
     private final ProjectTypeRepository projectTypeRepository;
@@ -79,13 +88,6 @@ public class ProjectService {
         return new IdResponse(project.getId());
     }
 
-    private void saveTrueAttachment(Project target) {
-        projectAttachmentRepository.findByProject(target).
-                forEach(
-                        i->i.setSave(true)
-                );
-
-    }
 
     @Transactional
     public IdResponse create(ProjectCreateRequest req) {
@@ -244,22 +246,19 @@ public class ProjectService {
 //
 //
 //    // read one project
-//    @Transactional
-//    public ProjectDto read(Long id){
-//        Project targetProject = projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
-//
-//        return ProjectDto.toDto(
-//                targetProject,
-//                routeOrderingRepository,
-//                routeProductRepository,
-//                bomRepository,
-//                preliminaryBomRepository,
-//                attachmentTagRepository,
-//                defaultImageAddress
-//        );
-//
-//    }
-//
+    @Transactional
+    public ProjectDto read(Long id){
+        Project targetProject = projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
+
+        return ProjectDto.toDto(
+                targetProject,
+                routeOrderingRepository,
+                routeProductRepository,
+                attachmentTagRepository
+        );
+
+    }
+
 //    public Page<ProjectDashboardDto> readPageAll(
 //
 //            Pageable pageRequest
@@ -333,29 +332,29 @@ public class ProjectService {
 //        return workingPagingList;
 //
 //    }
-//
-//    public Page<ProjectDashboardDto> readManagedProject(
-//            Pageable pageRequest,
-//            ProjectMemberRequest req
-//    ){
-//        // project member 가 나인 것만 데려오기
-//
-//        Member requestMember = memberRepository.findById(req.getMemberId()).orElseThrow(MemberNotFoundException::new);
-//        List<Project> projectMadeByMe = projectRepository.findByMember(requestMember).stream().filter(
-//                i->i.getTempsave().equals(false)
-//                        && (!i.isDeleted()||(i.isDeleted()&&i.getMember().getId()==req.getMemberId()))
-//        ).collect(Collectors.toList());
-//
-//        Page<Project> workingProjectList = projectRepository.findByProjects(
-//                projectMadeByMe, pageRequest
-//        );
-//
-//        return workingProjectList.map(
-//                d -> ProjectDashboardDto.toDto(d, routeOrderingRepository, routeProductRepository)
-//        );
-//
-//    }
-//
+
+    public Page<ProjectDto> readManagedProject(
+            Pageable pageRequest,
+            MemberIdReq req
+    ){
+        // project member 가 나인 것만 데려오기
+
+        Member requestMember = memberRepository.findById(req.getMemberId()).orElseThrow(MemberNotFoundException::new);
+        List<Project> projectMadeByMe = projectRepository.findByMember(requestMember).stream().filter(
+                i->i.getTempsave().equals(false)
+                        && (!i.isDeleted()||(i.isDeleted()&&i.getMember().getId()==req.getMemberId()))
+        ).collect(Collectors.toList());
+
+        Page<Project> workingProjectList = projectRepository.findByProjects(
+                projectMadeByMe, pageRequest
+        );
+
+        return workingProjectList.map(
+                d -> ProjectDto.toDto(d, routeOrderingRepository, routeProductRepository, attachmentTagRepository)
+        );
+
+    }
+
 //    public Page<ProjectDashboardDto> readPageAllSearch(
 //
 //            Pageable pageRequest,
@@ -472,77 +471,70 @@ public class ProjectService {
 //        );
 //
 //    }
-//
-//    // 수정된 project search
-//    public List<Project> searchProjectWithKeywords(@Nullable String search) {
-//
-//        List<Project> totalList = new ArrayList<>();
-//
-//        if(search!=null&&search.length()>0&&!search.contains("\n")){
-//            totalList  = projectRepository.findByNameContainingIgnoreCaseOrProjectNumberContainingIgnoreCaseOrLifecycleContainingIgnoreCaseOrClientItemNumberContainingIgnoreCase(
-//                    search,
-//                    search,
-//                    search,
-//                    search
-//            );
-//
-//        }else {
-//            totalList = projectRepository.findAll();
-//        }
-//
-//        return totalList.stream().filter(
-//
-//                i->
-//                        i.getTempsave().equals(false)
-////                            &&
-////                                    (
-////                                                i.getStatus().equals("cad")
-////                                            ||
-////                                                i.getStatus().equals("cadian")
-////                                    )
-//
-//        ).collect(Collectors.toList());
-//    }
-//
-//    public Page<ProjectDashboardDto> returnPagingProject(
-//            String name,
-//            Pageable pageRequest
-//
-//    ){
-//        Page<Project> projectList = projectRepository.findByProjects(searchProjectWithKeywords(name), pageRequest);
-//
-//        return projectList.map(
-//                d -> ProjectDashboardDto.toDto(d, routeOrderingRepository, routeProductRepository)
-//        );
-//    }
-//
-//    //delete one project
-//
-//    @Transactional
-//    public void delete(Long id) {
-//        Project project = projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
-//        deleteProjectAttachments(project.getProjectAttachments());
-//        projectRepository.delete(project);
-//    }
-//
-//    public NewItemCreateResponse projectUpdateToReadonlyFalseTempsaveTrue(Project project){
-//
-//        project.projectUpdateToReadonlyFalseTempSaveTrue();
-//        return new NewItemCreateResponse(project.getId());
-//    }
-//
-//
-//    private void deleteProjectAttachments(List<ProjectAttachment> projectAttachments) {
-//        projectAttachments.forEach(i -> fileService.delete(i.getUniqueName()));
-//    }
-//
-//    private void saveTrueAttachment(Project target) {
-//        projectAttachmentRepository.findByProject(target).
-//                forEach(
-//                        i->i.setSave(true)
-//                );
-//    }
-//
+
+
+    public List<Project> searchProjectWithKeywords(@Nullable String search) {
+
+        List<Project> totalList = new ArrayList<>();
+
+        if(search!=null&&search.length()>0&&!search.contains("\n")){
+            totalList  = projectRepository.findByNameContainingIgnoreCaseOrProjectNumberContainingIgnoreCaseOrLifecycleContainingIgnoreCase(
+                    search,
+                    search,
+                    search
+            );
+
+        }else {
+            totalList = projectRepository.findAll();
+        }
+
+        return totalList.stream().filter(
+
+                i->
+                        i.getTempsave().equals(false)
+
+        ).collect(Collectors.toList());
+    }
+
+    public Page<ProjectDto> returnPagingProject(
+            String name,
+            Pageable pageRequest
+
+    ){
+
+        Page<Project> projectList = projectRepository.findByProjects(searchProjectWithKeywords(name), pageRequest);
+
+        return projectList.map(
+                d -> ProjectDto.toDto(
+                        d,
+                        routeOrderingRepository,
+                        routeProductRepository,
+                        attachmentTagRepository
+                        )
+        );
+    }
+
+
+    @Transactional
+    public void delete(Long id) {
+        Project project = projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
+        deleteProjectAttachments(project.getProjectAttachments());
+        projectRepository.delete(project);
+    }
+
+
+
+    private void deleteProjectAttachments(List<ProjectAttachment> projectAttachments) {
+        projectAttachments.forEach(i -> fileService.delete(i.getUniqueName()));
+    }
+
+    private void saveTrueAttachment(Project target) {
+        projectAttachmentRepository.findByProject(target).
+                forEach(
+                        i->i.setSave(true)
+                );
+    }
+
 //    private void uploadAttachments(List<ProjectAttachment> attachments, List<MultipartFile> filedAttachments) {
 //        // 실제 이미지 파일을 가지고 있는 Multipart 파일을
 //        // 파일이 가지는 unique name 을 파일명으로 해서 파일저장소 업로드
@@ -709,26 +701,26 @@ public class ProjectService {
 //                targetAttachmentsForTagAndComment
 //        );
 //    }
-//
-//    @Transactional
-//    public Long deleted(Long id) {
-//        Project project = projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
-//        project.updateDeleted();
-//        return id;
-//    }
-//
-//    @Transactional
-//    public Long drop(Long id) {
-//        Project project = projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
-//        project.updateDrop();
-//        return id;
-//    }
-//
-//    @Transactional
-//    public Long pending(Long id) {
-//        Project project = projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
-//        project.updatePending();
-//        return id;
-//    }
+
+    @Transactional
+    public Long deleted(Long id) {
+        Project project = projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
+        project.updateDeleted();
+        return id;
+    }
+
+    @Transactional
+    public Long drop(Long id) {
+        Project project = projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
+        project.updateDrop();
+        return id;
+    }
+
+    @Transactional
+    public Long pending(Long id) {
+        Project project = projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
+        project.updatePending();
+        return id;
+    }
 }
 

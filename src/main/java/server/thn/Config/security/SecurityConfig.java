@@ -57,7 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/project/temp").authenticated()
                 .antMatchers(HttpMethod.GET, "/project/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/project/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/project/management").authenticated()
                 .antMatchers(HttpMethod.PUT, "/project/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT, "/project/temp/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT, "/project/temp/end/{id}").authenticated()
 
                 .antMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/swagger-ui.html").permitAll()
