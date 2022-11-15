@@ -15,6 +15,7 @@ import server.thn.File.service.FileService;
 import server.thn.Member.entity.Member;
 import server.thn.Member.exception.MemberNotFoundException;
 import server.thn.Member.repository.MemberRepository;
+import server.thn.Project.dto.C1SelectDto;
 import server.thn.Project.dto.ProjectCreateRequest;
 import server.thn.Project.dto.ProjectDto;
 import server.thn.Project.entity.Project;
@@ -25,6 +26,8 @@ import server.thn.Project.repository.ProjectRepository;
 import server.thn.Project.repository.ProjectTypeRepository;
 import server.thn.Project.repository.buyer.BuyerOrganizationRepository;
 import server.thn.Project.repository.carType.CarTypeRepository;
+import server.thn.Project.repository.classification.ProduceOrganizationClassification1Repository;
+import server.thn.Project.repository.classification.ProduceOrganizationClassification2Repository;
 import server.thn.Project.repository.produceOrg.ProduceOrganizationRepository;
 import server.thn.Route.repository.RouteOrderingRepository;
 import server.thn.Route.repository.RouteProductRepository;
@@ -50,6 +53,9 @@ public class ProjectService {
     private final CarTypeRepository carTypeRepository;
     private final AttachmentTagRepository attachmentTagRepository;
     private final ProjectAttachmentRepository projectAttachmentRepository;
+
+    private final ProduceOrganizationClassification1Repository produceOrganizationClassification1Repository;
+    private final ProduceOrganizationClassification2Repository produceOrganizationClassification2Repository;
 
     @Value("${default.image.address}")
     private String defaultImageAddress;
@@ -245,7 +251,7 @@ public class ProjectService {
 //    }
 //
 //
-//    // read one project
+    // read one project
     @Transactional
     public ProjectDto read(Long id){
         Project targetProject = projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
@@ -256,7 +262,19 @@ public class ProjectService {
                 routeProductRepository,
                 attachmentTagRepository
         );
+    }
 
+    /**
+     * PROJECT ORGANIZATION 트리 구조 데려오기 !
+     * @return
+     */
+    public List<C1SelectDto> readAllProduceOrganizationClassification1(
+
+    ) {
+        return  C1SelectDto.toDtoList(
+                produceOrganizationClassification1Repository.findAll(),
+                produceOrganizationClassification2Repository
+        );
     }
 
 //    public Page<ProjectDashboardDto> readPageAll(
