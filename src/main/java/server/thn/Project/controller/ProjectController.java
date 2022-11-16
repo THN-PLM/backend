@@ -84,19 +84,6 @@ public class ProjectController {
                 projectService.create(req));
     }
 
-
-    @CrossOrigin(origins = "https://eci-plm.kro.kr")
-    @GetMapping("/classification/produce-organization")
-    @ResponseStatus(HttpStatus.OK)
-    public Response readClassification1All() {
-        return Response.success(
-                projectService.
-                        readAllProduceOrganizationClassification1());
-    }
-
-
-
-//
 //    /**
 //     * 특정 프로젝트 수정
 //     *

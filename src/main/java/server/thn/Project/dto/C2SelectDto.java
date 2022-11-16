@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
+import server.thn.Project.entity.BuyerOrganization;
+import server.thn.Project.entity.buyerOrgClassification.BuyerOrganizationClassification2;
 import server.thn.Project.entity.produceOrgClassification.ProduceOrganizationClassification1;
 import server.thn.Project.entity.produceOrgClassification.ProduceOrganizationClassification2;
 import server.thn.Project.repository.classification.ProduceOrganizationClassification1Repository;
@@ -32,7 +34,7 @@ public class C2SelectDto {
     @Nullable
     private String api;
 
-    public static List<C2SelectDto> toDtoList(
+    public static List<C2SelectDto> toProduceOrgDtoList(
             String beforeName,
             String beforeId,
             List<ProduceOrganizationClassification2> classification2List
@@ -47,7 +49,36 @@ public class C2SelectDto {
                         c.getLast(),
 
                         beforeName + "/" + c.getName(),
-                        beforeId + "/" + c.getId() + "/" + (c.getLast() == 1 ? "99999" : ""),
+                        beforeId + "/" + c.getId(),
+
+                        new ArrayList<>(),
+
+                        " "
+                )
+        ).collect(
+                toList()
+        );
+
+        return classification1SelectDtoList;
+    }
+
+
+    public static List<C2SelectDto> toBuyerOrgDtoList(
+            String beforeName,
+            String beforeId,
+            List<BuyerOrganizationClassification2> classification2List
+    ) {
+
+        List<C2SelectDto> classification1SelectDtoList
+                = classification2List.stream().map(
+
+                c -> new C2SelectDto(
+                        c.getId(),
+                        c.getName(),
+                        c.getLast(),
+
+                        beforeName + "/" + c.getName(),
+                        beforeId + "/" + c.getId(),
 
                         new ArrayList<>(),
 

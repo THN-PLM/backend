@@ -69,7 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/route/reject-possible/{id}").authenticated()
                 .antMatchers(HttpMethod.GET, "/route/members/{id}").authenticated()
 
-                .antMatchers(HttpMethod.GET, "/classification/produce-organization").authenticated()
+                .antMatchers(HttpMethod.GET, "/classification/produceOrganization").authenticated()
+                .antMatchers(HttpMethod.GET, "/classification/buyerOrganization").authenticated()
 
                 .antMatchers(HttpMethod.PUT, "/approveRoute/{id}").authenticated()
                 .antMatchers(HttpMethod.PUT, "/rejectRoute/{id}").authenticated()

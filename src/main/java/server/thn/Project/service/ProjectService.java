@@ -264,18 +264,6 @@ public class ProjectService {
         );
     }
 
-    /**
-     * PROJECT ORGANIZATION 트리 구조 데려오기 !
-     * @return
-     */
-    public List<C1SelectDto> readAllProduceOrganizationClassification1(
-
-    ) {
-        return  C1SelectDto.toDtoList(
-                produceOrganizationClassification1Repository.findAll(),
-                produceOrganizationClassification2Repository
-        );
-    }
 
 //    public Page<ProjectDashboardDto> readPageAll(
 //
