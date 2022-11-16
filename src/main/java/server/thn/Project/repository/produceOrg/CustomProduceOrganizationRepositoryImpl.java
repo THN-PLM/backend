@@ -50,8 +50,8 @@ public class CustomProduceOrganizationRepositoryImpl extends QuerydslRepositoryS
                                 produceOrganization.id,
                                 produceOrganization.code1,
                                 produceOrganization.code2,
-                                produceOrganization.department.classification1.name,
-                                produceOrganization.department.classification2.name
+                                produceOrganization.department.produceOrganizationClassification1.name,
+                                produceOrganization.department.produceOrganizationClassification2.name
                         ))
                         .from(produceOrganization)
                         .where(predicate)
