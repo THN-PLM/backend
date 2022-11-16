@@ -25,7 +25,7 @@ public class MemberPageController{
 
     private final MemberService memberService;
 
-    @CrossOrigin(origins = "https://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/members/page")
     //@ApiOperation(value = "member page GET", notes = "멤버 리스트 페이징 GET")
     public Page<MemberDto> paging(@PageableDefault(size=5)

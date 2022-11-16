@@ -14,7 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "https://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RouteOrderingController {
     private final RouteOrderingService newRouteService;
 
@@ -46,7 +46,7 @@ public class RouteOrderingController {
      * @return
      */
 
-    @CrossOrigin(origins = "https://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/routeByProj/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "프로젝트 타입에 따른 라우트 데려오기", notes = "양산/선형에 따라서")

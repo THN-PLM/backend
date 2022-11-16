@@ -27,7 +27,7 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "https://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProjectController {
 
     private final MemberRepository memberRepository;
@@ -47,7 +47,7 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
-    @CrossOrigin(origins = "https://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/project/temp")
     @ResponseStatus(HttpStatus.CREATED)
     @AssignMemberId
@@ -69,7 +69,7 @@ public class ProjectController {
      * @param req
      * @return 200 (success)
      */
-    @CrossOrigin(origins = "https://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/project")
     @ResponseStatus(HttpStatus.CREATED)
     @AssignMemberId
@@ -91,7 +91,7 @@ public class ProjectController {
 //     * @param req
 //     * @return
 //     */
-//    @CrossOrigin(origins = "https://localhost:3000")
+//    @CrossOrigin(origins = "http://localhost:3000")
 //    @PutMapping("/project/temp/{id}")
 //    @ResponseStatus(HttpStatus.OK)
 //    @AssignModifierId //수정자 추가
@@ -104,7 +104,7 @@ public class ProjectController {
 //        return Response.success(projectService.update(id, req));
 //    }
 //
-//    @CrossOrigin(origins = "https://localhost:3000")
+//    @CrossOrigin(origins = "http://localhost:3000")
 //    @PutMapping("/project/temp/end/{id}")
 //    @ResponseStatus(HttpStatus.CREATED)
 //    @AssignModifierId //0605 : 수정 시에는 글쓴이 아디 주입 아니고, 수정자 아이디 주입
@@ -119,7 +119,7 @@ public class ProjectController {
 //        );
 //    }
 //
-//    @CrossOrigin(origins = "https://localhost:3000")
+//    @CrossOrigin(origins = "http://localhost:3000")
 //    @DeleteMapping("/project/{id}")
 //    @ResponseStatus(HttpStatus.OK)
 //    public Response delete(@PathVariable Long id) {
@@ -135,7 +135,7 @@ public class ProjectController {
 
     // delete , drop , pending API
 
-    @CrossOrigin(origins = "https://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("/project-delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     @AssignModifierId //수정자 추가
@@ -148,7 +148,7 @@ public class ProjectController {
 
     // project/drop/{id}
 
-    @CrossOrigin(origins = "https://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("/project-drop/{id}")
     @ResponseStatus(HttpStatus.OK)
     @AssignModifierId //수정자 추가
@@ -161,7 +161,7 @@ public class ProjectController {
 
     // project/pending/{id}
 
-    @CrossOrigin(origins = "https://localhost:3000")
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("/project-pending/{id}")
     @ResponseStatus(HttpStatus.OK)
     @AssignModifierId //수정자 추가
