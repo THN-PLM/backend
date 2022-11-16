@@ -12,6 +12,7 @@ import server.thn.Route.entity.RouteOrdering;
 import server.thn.Route.repository.RouteOrderingRepository;
 import server.thn.Route.repository.RouteProductRepository;
 
+import javax.persistence.Column;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,10 +34,34 @@ public class ProjectDto {
     private String type;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate startDate;
+    private LocalDate allDoStartPeriod;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-    private LocalDate endDate;
+    private LocalDate allDoOverPeriod;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate protoStartPeriod;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate protoOverPeriod;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate p1StartPeriod;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate p1OverPeriod;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate p2StartPeriod;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate p2OverPeriod;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate mStartPeriod;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate mOverPeriod;
 
     private ProduceOrganizationDto produceOrganization;
 
@@ -46,7 +71,6 @@ public class ProjectDto {
 
     private String status; // period 랑 똑같음
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private String period; // 현재 진행 중인 라우트 시점
 
     //List<ProductDto> project 에 속한 product 리스트
@@ -82,9 +106,19 @@ public class ProjectDto {
                 project.getId(),
                 project.getProjectNumber(),
                 project.getName(),
-                project.getProjectType().getProjectType().name(),
+                project.getProjectType().getId().toString(),
+
                 project.getAllDoStartPeriod(),
                 project.getAllDoOverPeriod(),
+                project.getProtoStartPeriod(),
+                project.getProtoOverPeriod(),
+                project.getP1StartPeriod(),
+                project.getP1OverPeriod(),
+                project.getP2StartPeriod(),
+                project.getP2OverPeriod(),
+                project.getMStartPeriod(),
+                project.getMOverPeriod(),
+
                 ProduceOrganizationDto.toDto(project.getProduceOrganization()),
                 ProduceOrganizationDto.toDto(project.getBuyerOrganization()),
                 " ",
