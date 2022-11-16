@@ -45,7 +45,7 @@ public class ProduceOrganizationController {
     }
 
 
-    @CrossOrigin(origins = "https://eci-plm.kro.kr")
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/classification/produceOrganization")
     @ResponseStatus(HttpStatus.OK)
     public Response readClassification1All() {

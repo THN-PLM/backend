@@ -38,7 +38,7 @@ public class BuyerOrganizationController {
 
 
 
-    @CrossOrigin(origins = "https://eci-plm.kro.kr")
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/classification/buyerOrganization")
     @ResponseStatus(HttpStatus.OK)
     public Response readClassification1All() {
