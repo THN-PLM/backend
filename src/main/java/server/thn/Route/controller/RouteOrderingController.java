@@ -28,6 +28,7 @@ public class RouteOrderingController {
         return Response.success(
                 newRouteService.createProjectRoute(req)
         );
+
     }
 
     @GetMapping("/route/{id}")
@@ -44,6 +45,7 @@ public class RouteOrderingController {
      * @param id
      * @return
      */
+
     @CrossOrigin(origins = "https://localhost:3000")
     @GetMapping("/routeByProj/{id}")
     @ResponseStatus(HttpStatus.OK)

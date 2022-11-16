@@ -23,8 +23,8 @@ public class ProduceOrganizationDto {
                 produceOrganization.getId(),
                 produceOrganization.getCode1(),
                 produceOrganization.getCode2(),
-                produceOrganization.getDepartment().getClassification1().getName(),
-                produceOrganization.getDepartment().getClassification2().getName()
+                produceOrganization.getDepartment().getProduceOrganizationClassification1().getName(),
+                produceOrganization.getDepartment().getProduceOrganizationClassification2().getName()
         );
     }
 

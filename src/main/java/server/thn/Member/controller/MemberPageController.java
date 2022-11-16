@@ -13,19 +13,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import server.thn.Common.page.CustomPageImpl;
 import server.thn.Member.dto.MemberDto;
-import server.thn.Member.entity.Member;
 import server.thn.Member.service.member.MemberService;
-import server.thn.Project.entity.produceOrgClassification.ProduceOrganizationClassification;
-import server.thn.Member.exception.ClassificationNotFoundException;
-import server.thn.Member.repository.MemberRepository;
-import server.thn.Project.repository.classification.*;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Transactional
 @RestController

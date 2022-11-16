@@ -21,11 +21,11 @@ public class ClassificationDto {
 
         return new ClassificationDto(
 
-                    classification.getClassification1().getName()
-                            +"/"+classification.getClassification2().getName()
+                    classification.getProduceOrganizationClassification1().getName()
+                            +"/"+classification.getProduceOrganizationClassification2().getName()
                             ,
-                    classification.getClassification1().getId()
-                            +"/"+classification.getClassification2().getId()
+                classification.getProduceOrganizationClassification1().getId()
+                            +"/"+classification.getProduceOrganizationClassification2().getId()
 
             );
         }

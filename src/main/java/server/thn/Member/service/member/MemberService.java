@@ -105,8 +105,8 @@ public class MemberService {
         indexes.add("Name");
         indexes.add("Department");
         indexes.add("Position/Authority");
-        indexes.add("Id");
-        indexes.add("Created At");
+        //indexes.add("Id");
+        //indexes.add("Created At");
 
         List<Long > ids = memberDtoConvert(name).stream().map(
                 mem -> mem.getId()

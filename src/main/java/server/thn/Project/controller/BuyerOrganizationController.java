@@ -14,10 +14,11 @@ import javax.validation.Valid;
 @RestController
 @CrossOrigin(origins = "https://localhost:3000")
 public class BuyerOrganizationController {
+
     private final BuyerOrganizationService buyerOrganizationService;
 
     @CrossOrigin(origins = "https://localhost:3000")
-    @GetMapping("/buyerOrganizationId")
+    @GetMapping("/buyerOrganization")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "발주처 list get", notes = "발주처 list get")
     public Response readAll(@Valid ReadCondition cond) {
@@ -27,12 +28,24 @@ public class BuyerOrganizationController {
     }
 
     @CrossOrigin(origins = "https://localhost:3000")
-    @DeleteMapping("/buyerOrganizationId/{id}")
+    @DeleteMapping("/buyerOrganization/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "발주처 list 삭제", notes = "발주처 삭제")
     public Response delete(@PathVariable Long id) {
         buyerOrganizationService.delete(id);
         return Response.success();
     }
+
+
+
+    @CrossOrigin(origins = "https://eci-plm.kro.kr")
+    @GetMapping("/classification/buyerOrganization")
+    @ResponseStatus(HttpStatus.OK)
+    public Response readClassification1All() {
+        return Response.success(
+                buyerOrganizationService.
+                        readAllBuyerOrganizationClassification1());
+    }
+
 
 }

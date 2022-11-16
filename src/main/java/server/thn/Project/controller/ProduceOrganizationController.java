@@ -18,7 +18,7 @@ public class ProduceOrganizationController {
     private final ProduceOrganizationService produceOrganizationService;
 
     @CrossOrigin(origins = "https://localhost:3000")
-    @GetMapping("/produceOrganizationId")
+    @GetMapping("/produceOrganization")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "생산조직 list get", notes = "생산조직 list get")
     public Response readAll(@Valid ReadCondition cond) {
@@ -36,12 +36,22 @@ public class ProduceOrganizationController {
 //    }
 
     @CrossOrigin(origins = "https://localhost:3000")
-    @DeleteMapping("/produceOrganizationId/{id}")
+    @DeleteMapping("/produceOrganization/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "생산조직 list 삭제", notes = "생산조직 삭제")
     public Response delete(@PathVariable Long id) {
         produceOrganizationService.delete(id);
         return Response.success();
+    }
+
+
+    @CrossOrigin(origins = "https://eci-plm.kro.kr")
+    @GetMapping("/classification/produceOrganization")
+    @ResponseStatus(HttpStatus.OK)
+    public Response readClassification1All() {
+        return Response.success(
+                produceOrganizationService.
+                        readAllProduceOrganizationClassification1());
     }
 
 }
