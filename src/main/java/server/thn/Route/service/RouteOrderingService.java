@@ -190,8 +190,8 @@ public class RouteOrderingService {
         List<String> typeList = new ArrayList<>();
 
         Integer routeType = ProjectTypeEnum.valueOf(
-                projectRepository.findById(id).orElseThrow(ProjectTypeNotFoundException::new)
-                        .getProjectType().getProjectType().name()
+                projectTypeRepository.findById(id).orElseThrow(ProjectTypeNotFoundException::new)
+                        .getProjectType().name()
         ).label();
 
         List routeProduct = List.of((routePreset.projectRouteName[routeType]));
