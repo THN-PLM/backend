@@ -10,6 +10,7 @@ import server.thn.Member.entity.Member;
 import server.thn.Member.exception.MemberNotFoundException;
 import server.thn.Member.repository.MemberRepository;
 import server.thn.Project.entity.ProjectTypeEnum;
+import server.thn.Project.exception.ProjectTypeNotFoundException;
 import server.thn.Project.exception.ProjectTypeRequiredException;
 import server.thn.Project.repository.ProjectRepository;
 import server.thn.Project.repository.ProjectTypeRepository;
@@ -189,7 +190,7 @@ public class RouteOrderingService {
         List<String> typeList = new ArrayList<>();
 
         Integer routeType = ProjectTypeEnum.valueOf(
-                projectRepository.findById(id).orElseThrow(ProjectTypeRequiredException::new)
+                projectRepository.findById(id).orElseThrow(ProjectTypeNotFoundException::new)
                         .getProjectType().getProjectType().name()
         ).label();
 
