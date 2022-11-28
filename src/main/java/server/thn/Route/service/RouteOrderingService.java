@@ -238,7 +238,6 @@ public class RouteOrderingService {
 
     }
 
-
     @Transactional
     public RouteOrderingCreateResponse createProjectRoute(RouteOrderingCreateRequest req) {
 
@@ -269,17 +268,12 @@ public class RouteOrderingService {
             System.out.println(routeProduct1.getMembers().get(0).getRouteProduct());
         }
 
-        newRoute.getProject().updateTempsaveWhenMadeRoute();
-        //라우트 만들면 임시저장 해제
+        newRoute.getProject().updateTempsaveWhenMadeRoute();//라우트 만들면 임시저장 해제
 
         newRoute.updateToComplete();
-        //0808 : 프로젝트는 만들자마자 끝나버리지
-
 
         return new RouteOrderingCreateResponse(newRoute.getId());
     }
-
-    ////////////
 
     @Transactional
     public RouteUpdateResponse approveUpdate(Long id, RouteOrderingUpdateRequest req) {

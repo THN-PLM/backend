@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.GET, "/test").permitAll()
                 .antMatchers(HttpMethod.GET, "/route/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/members/{id}/**").access("@memberGuard.check(#id)")
+                .antMatchers(HttpMethod.DELETE, "/members/{id}/**").authenticated()//.access("@memberGuard.check(#id)")
                 .antMatchers(HttpMethod.GET, "/image/**").permitAll()
 
 //                .antMatchers(HttpMethod.POST, "/items").authenticated()
