@@ -19,7 +19,7 @@ public class RouteOrderingController {
     private final RouteOrderingService newRouteService;
 
 
-    @PostMapping("/route/project")
+    @PostMapping("/route/proj")
     @ResponseStatus(HttpStatus.CREATED)
     @AssignMemberId
     public Response createProjRoutes(
