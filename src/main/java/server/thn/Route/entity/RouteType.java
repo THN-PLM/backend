@@ -25,5 +25,8 @@ public class RouteType {
 
     @Column
     private String todo;
+
+    @Column
+    private String period;
 }
 

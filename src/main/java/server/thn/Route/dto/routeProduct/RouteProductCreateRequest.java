@@ -39,7 +39,6 @@ public class RouteProductCreateRequest{
         List<String> routeProductType = List.of((routePreset.projectRouteType[projectTypeId-1]));
         List<String> routeProductTypeModule = List.of((routePreset.projectRouteTypeModule[projectTypeId-1]));
 
-
         // 멤버 적절히 할당해줬는지 체크
 
         Integer neededRouteProductCnt = routeProductType.size()-1;
@@ -54,15 +53,11 @@ public class RouteProductCreateRequest{
             throw new MemberNotAssignedException();
         }
 
-        //
-
-
         List<Member> emptyRouteMember = new ArrayList<>();
         //DB에 꼭 멤버 아이디 -1 인 애 생성해주기
         emptyRouteMember.add(memberRepository.findById(-1L).orElseThrow(MemberNotFoundException::new));
 
         // 1) request RouteProduct는 별도 생성 (코멘트 및 멤버 지정 이슈)
-
         List<Member> member1 = new ArrayList<>();
 
         member1.add(memberRepository.findById(req.getMemberId())
@@ -86,9 +81,7 @@ public class RouteProductCreateRequest{
                 -1,
                 member1,
                 routeOrdering
-
         );
-
 
         // 2) 나머지 rest route 생성
         List<RouteProduct> restRouteProducts = new ArrayList<>();

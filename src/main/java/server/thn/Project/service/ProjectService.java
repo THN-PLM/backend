@@ -1,6 +1,8 @@
 package server.thn.Project.service;
 
 import com.sun.istack.Nullable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -10,14 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import server.thn.Common.dto.MemberIdReq;
 import server.thn.Common.dto.response.IdResponse;
+import server.thn.Common.entity.EntityDate;
 import server.thn.File.repository.AttachmentTagRepository;
 import server.thn.File.service.FileService;
 import server.thn.Member.entity.Member;
 import server.thn.Member.exception.MemberNotFoundException;
 import server.thn.Member.repository.MemberRepository;
-import server.thn.Project.dto.C1SelectDto;
-import server.thn.Project.dto.ProjectCreateRequest;
-import server.thn.Project.dto.ProjectDto;
+import server.thn.Project.dto.*;
 import server.thn.Project.entity.Project;
 import server.thn.Project.entity.ProjectAttachment;
 import server.thn.Project.exception.ProjectNotFoundException;
@@ -29,10 +30,13 @@ import server.thn.Project.repository.carType.CarTypeRepository;
 import server.thn.Project.repository.classification.ProduceOrganizationClassification1Repository;
 import server.thn.Project.repository.classification.ProduceOrganizationClassification2Repository;
 import server.thn.Project.repository.produceOrg.ProduceOrganizationRepository;
+import server.thn.Route.entity.RouteOrdering;
 import server.thn.Route.repository.RouteOrderingRepository;
 import server.thn.Route.repository.RouteProductRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -87,7 +91,7 @@ public class ProjectService {
                         attachmentTagRepository
                 )
         );
-        if(!(req.getAttachments()==null || req.getAttachments().size()==0)) {
+        if(!(req.getAttachments()== null || req.getAttachments().size()==0)) {
             uploadAttachments(project.getProjectAttachments(), req.getAttachments());
         }
 
@@ -119,138 +123,126 @@ public class ProjectService {
         return new IdResponse(project.getId());
     }
 
-//
-//    @Transactional
-//
-//    public ItemUpdateResponse update(Long id, ProjectUpdateRequest req) {
-//
-//        Project project =  projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
-//
-//        List<Long> oldTags = produceOldNewTagComment(project, req).getOldTag();
-//        List<Long> newTags = produceOldNewTagComment(project, req).getNewTag();
-//        List<String> oldComment = produceOldNewTagComment(project, req).getOldComment();
-//        List<String> newComment =produceOldNewTagComment(project, req).getNewComment();
-//        List<ProjectAttachment> targetAttachmentsForTagAndComment
-//                = produceOldNewTagComment(project, req).getTargetAttachmentsForTagAndComment();
-//        Collections.sort(targetAttachmentsForTagAndComment, Comparator.comparing(EntityDate::getCreatedAt));
-//
-//        Project.FileUpdatedResult result = project.update(
-//                req,
-//                newItemRepository,
-//                projectTypeRepository,
-//                projectLevelRepository,
-//                produceOrganizationRepository,
-//                clientOrganizationRepository,
-//                carTypeRepository,
-//                memberRepository,
-//                attachmentTagRepository,
-//
-//                oldTags,
-//                newTags,
-//                oldComment,
-//                newComment,
-//
-//                targetAttachmentsForTagAndComment
-//
-//        );
-//
-//
-//        uploadAttachments(
-//                result.getAttachmentUpdatedResult().getAddedAttachments(),
-//                result.getAttachmentUpdatedResult().getAddedAttachmentFiles()
-//        );
-//        deleteAttachments(
-//                result.getAttachmentUpdatedResult().getDeletedAttachments()
-//        );
-//
-//        Long routeId = -1L;
-//        if(routeOrderingRepository.findByProjectOrderByIdAsc(project).size()>0) {
-//            RouteOrdering routeOrdering =
-//                    routeOrderingRepository.findByProjectOrderByIdAsc(project)
-//                            .get
-//                                    (
-//                                            routeOrderingRepository.findByProjectOrderByIdAsc(project).size()-1
-//                                    );
-//            routeId = routeOrdering.getId();
-//        }
-//
-//        return new ItemUpdateResponse(id, routeId);
-//
-//    }
-//
-//    @Transactional
-//    public ItemUpdateResponse tempEnd(
-//            Long id, ProjectUpdateRequest req) {
-//
-//        Project project = projectRepository.findById(id).
-//                orElseThrow(ProjectNotFoundException::new);
-//
-//        List<Long> oldTags = produceOldNewTagComment(project, req).getOldTag();
-//        List<Long> newTags = produceOldNewTagComment(project, req).getNewTag();
-//        List<String> oldComment = produceOldNewTagComment(project, req).getOldComment();
-//        List<String> newComment =produceOldNewTagComment(project, req).getNewComment();
-//        List<ProjectAttachment> targetAttachmentsForTagAndComment
-//                = produceOldNewTagComment(project, req).getTargetAttachmentsForTagAndComment();
-//        Collections.sort(targetAttachmentsForTagAndComment, Comparator.comparing(EntityDate::getCreatedAt));
-//
-//        Project.FileUpdatedResult result = project.tempEnd(
-//                req,
-//                newItemRepository,
-//                projectTypeRepository,
-//                projectLevelRepository,
-//                produceOrganizationRepository,
-//                clientOrganizationRepository,
-//                carTypeRepository,
-//                memberRepository,
-//                attachmentTagRepository,
-//
-//                oldTags,
-//                newTags,
-//                oldComment,
-//                newComment,
-//
-//                targetAttachmentsForTagAndComment
-//        );
-//
-//        uploadAttachments(
-//                result.getAttachmentUpdatedResult().getAddedAttachments(),
-//                result.getAttachmentUpdatedResult().getAddedAttachmentFiles()
-//        );
-//        deleteAttachments(
-//                result.getAttachmentUpdatedResult().getDeletedAttachments()
-//        );
-//
-//        Long routeId = -1L;
-//        if(routeOrderingRepository.findByProjectOrderByIdAsc(project).size()>0) {
-//            RouteOrdering routeOrdering =
-//                    routeOrderingRepository.findByProjectOrderByIdAsc(project)
-//                            .get
-//                                    (
-//                                            routeOrderingRepository.findByProjectOrderByIdAsc(project).size()-1
-//                                    );
-//            routeId = routeOrdering.getId();
-//        }
-//
-//        saveTrueAttachment(project);
-//        /////////////////////////////////////////////////////////////////////////
-//
-//        return new ItemUpdateResponse(id, routeId);
-//
-//    }
-//
-//    public Long routeIdReturn(Long newCreateItemId){
-//
-//        NewItem newItemOfProject = newItemRepository.findById(newCreateItemId).orElseThrow(ItemNotFoundException::new);
-//
-//        List<RouteOrdering> routeOrdering = routeOrderingRepository.findByNewItemOrderByIdAsc(newItemOfProject);
-//
-//        //프로젝트에 딸린 라우트
-//        Long routeId = routeOrderingRepository.findByNewItemOrderByIdAsc(newItemOfProject).get(routeOrdering.size()-1).getId();
-//
-//        return routeId;
-//    }
-//
-//
+
+    @Transactional
+    public UpdateResponse update(Long id, ProjectUpdateRequest req) {
+
+        Project project =  projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
+
+        List<Long> oldTags = produceOldNewTagComment(project, req).getOldTag();
+        List<Long> newTags = produceOldNewTagComment(project, req).getNewTag();
+        List<String> oldComment = produceOldNewTagComment(project, req).getOldComment();
+        List<String> newComment =produceOldNewTagComment(project, req).getNewComment();
+        List<ProjectAttachment> targetAttachmentsForTagAndComment
+                = produceOldNewTagComment(project, req).getTargetAttachmentsForTagAndComment();
+        Collections.sort(targetAttachmentsForTagAndComment, Comparator.comparing(EntityDate::getCreatedAt));
+
+        Project.FileUpdatedResult result = project.update(
+                req,
+                projectTypeRepository,
+                produceOrganizationRepository,
+                carTypeRepository,
+                memberRepository,
+                attachmentTagRepository,
+                oldTags,
+                newTags,
+                oldComment,
+                newComment,
+                targetAttachmentsForTagAndComment,
+                "update"
+        );
+
+        uploadAttachments(
+                result.getAttachmentUpdatedResult().getAddedAttachments(),
+                result.getAttachmentUpdatedResult().getAddedAttachmentFiles()
+        );
+
+        deleteAttachments(
+                result.getAttachmentUpdatedResult().getDeletedAttachments()
+        );
+
+        Long routeId = -1L;
+        if(routeOrderingRepository.findByProjectOrderByIdAsc(project).size()>0) {
+            RouteOrdering routeOrdering =
+                    routeOrderingRepository.findByProjectOrderByIdAsc(project)
+                            .get
+                                    (
+                                            routeOrderingRepository.findByProjectOrderByIdAsc(project).size()-1
+                                    );
+            routeId = routeOrdering.getId();
+        }
+
+        return new UpdateResponse(id, routeId);
+
+    }
+
+    @Transactional
+    public UpdateResponse tempEnd(
+            Long id, ProjectUpdateRequest req) {
+
+        Project project = projectRepository.findById(id).
+                orElseThrow(ProjectNotFoundException::new);
+
+        List<Long> oldTags = produceOldNewTagComment(project, req).getOldTag();
+        List<Long> newTags = produceOldNewTagComment(project, req).getNewTag();
+        List<String> oldComment = produceOldNewTagComment(project, req).getOldComment();
+        List<String> newComment =produceOldNewTagComment(project, req).getNewComment();
+        List<ProjectAttachment> targetAttachmentsForTagAndComment
+                = produceOldNewTagComment(project, req).getTargetAttachmentsForTagAndComment();
+        Collections.sort(targetAttachmentsForTagAndComment, Comparator.comparing(EntityDate::getCreatedAt));
+
+        Project.FileUpdatedResult result = project.update(
+                req,
+                projectTypeRepository,
+                produceOrganizationRepository,
+                carTypeRepository,
+                memberRepository,
+                attachmentTagRepository,
+
+                oldTags,
+                newTags,
+                oldComment,
+                newComment,
+
+                targetAttachmentsForTagAndComment,
+
+                "tempEnd"
+        );
+
+        uploadAttachments(
+                result.getAttachmentUpdatedResult().getAddedAttachments(),
+                result.getAttachmentUpdatedResult().getAddedAttachmentFiles()
+        );
+        deleteAttachments(
+                result.getAttachmentUpdatedResult().getDeletedAttachments()
+        );
+
+        Long routeId = -1L;
+        if(routeOrderingRepository.findByProjectOrderByIdAsc(project).size()>0) {
+            RouteOrdering routeOrdering =
+                    routeOrderingRepository.findByProjectOrderByIdAsc(project)
+                            .get
+                                    (
+                                            routeOrderingRepository.findByProjectOrderByIdAsc(project).size()-1
+                                    );
+            routeId = routeOrdering.getId();
+        }
+
+        saveTrueAttachment(project);
+        /////////////////////////////////////////////////////////////////////////
+
+        return new UpdateResponse(id, routeId);
+
+    }
+
+    public Long routeIdReturn(Long id){
+
+        Project project = projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new);
+        List<RouteOrdering> routeOrderings = routeOrderingRepository.findByProjectOrderByIdAsc(project);
+        return routeOrderings.get(routeOrderings.size()-1).getId();
+    }
+
+
     // read one project
     @Transactional
     public ProjectDto read(Long id){
@@ -553,160 +545,160 @@ public class ProjectService {
 //                                )
 //                );
 //    }
-//
-//    private void deleteAttachments(List<ProjectAttachment> attachments) {
-//        for(ProjectAttachment attachment:attachments){
-//            if(!attachment.isSave()){
-//                fileService.delete(attachment.getUniqueName());
-//            }
-//        }
-//    }
-//
-//    @Getter
-//    @AllArgsConstructor
-//    public static class OldNewTagCommentUpdatedResult {
-//        private List<Long> oldTag;
-//        private List<Long> newTag;
-//        private List<String> oldComment;
-//        private List<String> newComment;
-//
-//        private List<ProjectAttachment> targetAttachmentsForTagAndComment;
-//    }
-//
-//    public ProjectService.OldNewTagCommentUpdatedResult produceOldNewTagComment(
-//            Project entity, //update 당하는 아이템
-//            ProjectUpdateRequest req
-//    ) {
-//        List<Long> oldDocTag = new ArrayList<>();
-//        List<Long> newDocTag = new ArrayList<>();
-//        List<String> oldDocComment = new ArrayList<>();
-//        List<String> newDocComment = new ArrayList<>();
-//
-//        List<ProjectAttachment> newItemAttachments
-//                = entity.getProjectAttachments();
-//
-//        List<ProjectAttachment> targetAttachmentsForTagAndComment = new ArrayList<>();
-//
-//        // OLD TAG, NEW TAG, COMMENT OLD NEW GENERATE
-//
-//        // 예전 태그, 코멘트 있고 추가된 문서도 있을 때
-//        if (newItemAttachments.size() > 0 && req.getAddedAttachments().size()>0 ) {
-//            // 올드 문서 기존 갯수(올드 태그, 코멘트 적용할 것) == 빼기 deleted 아이디 - deleted=true 인 애들
-//
-//            // 일단은 다 가져와
-//            List<ProjectAttachment> oldAttachments = entity.getProjectAttachments();
-//            for (ProjectAttachment attachment : oldAttachments) {
-//
-//                if (
-//                        (!attachment.isDeleted())
-//                    // (1) 첫번째 조건 : DELETED = FALSE (태그, 코멘트 적용 대상들은 현재 살아있어야 하고)
-//                ) {
-//                    if(req.getDeletedAttachments() != null){ // (1-1) 만약 사용자가 delete 를 입력한게 존재한다면
-//                        if(!(req.getDeletedAttachments().contains(attachment.getId()))){
-//                            // 그 delete 안에 이 attachment 아이디 존재하지 않을 때만 추가
-//                            targetAttachmentsForTagAndComment.add(attachment);
-//                        }
-//                    }
-//                    else{ //걍 애초에 delete 하는거 없으면 걍 더해주면 되지
-//                        targetAttachmentsForTagAndComment.add(attachment);
-//                    }
-//
-//                }
-//
-//            }
-//
-//            int standardIdx = targetAttachmentsForTagAndComment.size();
-//
-//            oldDocTag.addAll(req.getAddedTag().subList(0, standardIdx));
-//            newDocTag.addAll(req.getAddedTag().subList(standardIdx, req.getAddedTag().size()));
-//
-//            int idx=0;
-//            if (req.getAddedTag().size()>0 && req.getAddedAttachmentComment().size()==0) {
-//                List<String> refineString = new ArrayList<>();
-//                while(idx < req.getAddedTag().size()){
-//                    refineString.add(" ");
-//                    idx+=1;
-//                }
-//
-//                oldDocComment.addAll(refineString.subList(0, standardIdx));
-//                newDocComment.addAll(refineString.subList(standardIdx, refineString.size()));
-//
-//            }
-//            else {
-//                oldDocComment.addAll(req.getAddedAttachmentComment().subList(0, standardIdx));
-//                newDocComment.addAll(req.getAddedAttachmentComment().subList(standardIdx, req.getAddedAttachmentComment().size()));
-//            }
-//        }
-//        // 새로 추가된 아이는 없을 때
-//        else if(newItemAttachments.size()>0){
-//            System.out.println(" 새로 추가된앤 없고 기존 애들거만 갱신 go ");
-//
-//            // 일단은 다 가져와
-//            List<ProjectAttachment> oldAttachments = entity.getProjectAttachments();
-//            for (ProjectAttachment attachment : oldAttachments) {
-//
-//                if (
-//                        (!attachment.isDeleted())
-//                    // (1) 첫번째 조건 : DELETED = FALSE (태그, 코멘트 적용 대상들은 현재 살아있어야 하고)
-//                ) {
-//                    if(req.getDeletedAttachments() != null){ // (1-1) 만약 사용자가 delete 를 입력한게 존재한다면
-//                        if(!(req.getDeletedAttachments().contains(attachment.getId()))){
-//                            // 그 delete 안에 이 attachment 아이디 존재하지 않을 때만 추가
-//                            targetAttachmentsForTagAndComment.add(attachment);
-//                        }
-//                    }
-//                    else{ //걍 애초에 delete 하는거 없으면 걍 더해주면 되지
-//                        targetAttachmentsForTagAndComment.add(attachment);
-//                    }
-//
-//                }
-//
-//            }
-//
-//            oldDocTag.addAll(req.getAddedTag());
-//            oldDocComment.addAll(req.getAddedAttachmentComment());
-//
-//        }
-//        //기존에 암것도 없었고, 추가된 것만 있을 때
-//        else{
-//
-//            // 일단은 다 가져와
-//            List<ProjectAttachment> oldAttachments = entity.getProjectAttachments();
-//            for (ProjectAttachment attachment : oldAttachments) {
-//
-//                if (
-//                        (!attachment.isDeleted())
-//                    // (1) 첫번째 조건 : DELETED = FALSE (태그, 코멘트 적용 대상들은 현재 살아있어야 하고)
-//                ) {
-//                    if(req.getDeletedAttachments() != null){ // (1-1) 만약 사용자가 delete 를 입력한게 존재한다면
-//                        if(!(req.getDeletedAttachments().contains(attachment.getId()))){
-//                            // 그 delete 안에 이 attachment 아이디 존재하지 않을 때만 추가
-//                            targetAttachmentsForTagAndComment.add(attachment);
-//                        }
-//                    }
-//                    else{ //걍 애초에 delete 하는거 없으면 걍 더해주면 되지
-//                        targetAttachmentsForTagAndComment.add(attachment);
-//                    }
-//
-//                }
-//
-//            }
-//
-//            System.out.println(" 기존에 암것도 없었고, 추가된 것만 있을 때 ");
-//            newDocTag.addAll(req.getAddedTag().subList(0,req.getAddedTag().size()));
-//            newDocComment.addAll(req.getAddedAttachmentComment().subList(0, req.getAddedAttachmentComment().size()));
-//
-//        }
-//        return new ProjectService.OldNewTagCommentUpdatedResult(
-//
-//                oldDocTag,
-//                newDocTag,
-//                oldDocComment,
-//                newDocComment,
-//
-//                targetAttachmentsForTagAndComment
-//        );
-//    }
+
+    private void deleteAttachments(List<ProjectAttachment> attachments) {
+        for(ProjectAttachment attachment:attachments){
+            if(!attachment.isSave()){
+                fileService.delete(attachment.getUniqueName());
+            }
+        }
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class OldNewTagCommentUpdatedResult {
+        private List<Long> oldTag;
+        private List<Long> newTag;
+        private List<String> oldComment;
+        private List<String> newComment;
+
+        private List<ProjectAttachment> targetAttachmentsForTagAndComment;
+    }
+
+    public ProjectService.OldNewTagCommentUpdatedResult produceOldNewTagComment(
+            Project entity, //update 당하는 아이템
+            ProjectUpdateRequest req
+    ) {
+        List<Long> oldDocTag = new ArrayList<>();
+        List<Long> newDocTag = new ArrayList<>();
+        List<String> oldDocComment = new ArrayList<>();
+        List<String> newDocComment = new ArrayList<>();
+
+        List<ProjectAttachment> newItemAttachments
+                = entity.getProjectAttachments();
+
+        List<ProjectAttachment> targetAttachmentsForTagAndComment = new ArrayList<>();
+
+        // OLD TAG, NEW TAG, COMMENT OLD NEW GENERATE
+
+        // 예전 태그, 코멘트 있고 추가된 문서도 있을 때
+        if (newItemAttachments.size() > 0 && req.getAddedAttachments().size()>0 ) {
+            // 올드 문서 기존 갯수(올드 태그, 코멘트 적용할 것) == 빼기 deleted 아이디 - deleted=true 인 애들
+
+            // 일단은 다 가져와
+            List<ProjectAttachment> oldAttachments = entity.getProjectAttachments();
+            for (ProjectAttachment attachment : oldAttachments) {
+
+                if (
+                        (!attachment.isDeleted())
+                    // (1) 첫번째 조건 : DELETED = FALSE (태그, 코멘트 적용 대상들은 현재 살아있어야 하고)
+                ) {
+                    if(req.getDeletedAttachments() != null){ // (1-1) 만약 사용자가 delete 를 입력한게 존재한다면
+                        if(!(req.getDeletedAttachments().contains(attachment.getId()))){
+                            // 그 delete 안에 이 attachment 아이디 존재하지 않을 때만 추가
+                            targetAttachmentsForTagAndComment.add(attachment);
+                        }
+                    }
+                    else{ //걍 애초에 delete 하는거 없으면 걍 더해주면 되지
+                        targetAttachmentsForTagAndComment.add(attachment);
+                    }
+
+                }
+
+            }
+
+            int standardIdx = targetAttachmentsForTagAndComment.size();
+
+            oldDocTag.addAll(req.getAddedTag().subList(0, standardIdx));
+            newDocTag.addAll(req.getAddedTag().subList(standardIdx, req.getAddedTag().size()));
+
+            int idx=0;
+            if (req.getAddedTag().size()>0 && req.getAddedAttachmentComment().size()==0) {
+                List<String> refineString = new ArrayList<>();
+                while(idx < req.getAddedTag().size()){
+                    refineString.add(" ");
+                    idx+=1;
+                }
+
+                oldDocComment.addAll(refineString.subList(0, standardIdx));
+                newDocComment.addAll(refineString.subList(standardIdx, refineString.size()));
+
+            }
+            else {
+                oldDocComment.addAll(req.getAddedAttachmentComment().subList(0, standardIdx));
+                newDocComment.addAll(req.getAddedAttachmentComment().subList(standardIdx, req.getAddedAttachmentComment().size()));
+            }
+        }
+        // 새로 추가된 아이는 없을 때
+        else if(newItemAttachments.size()>0){
+            System.out.println(" 새로 추가된앤 없고 기존 애들거만 갱신 go ");
+
+            // 일단은 다 가져와
+            List<ProjectAttachment> oldAttachments = entity.getProjectAttachments();
+            for (ProjectAttachment attachment : oldAttachments) {
+
+                if (
+                        (!attachment.isDeleted())
+                    // (1) 첫번째 조건 : DELETED = FALSE (태그, 코멘트 적용 대상들은 현재 살아있어야 하고)
+                ) {
+                    if(req.getDeletedAttachments() != null){ // (1-1) 만약 사용자가 delete 를 입력한게 존재한다면
+                        if(!(req.getDeletedAttachments().contains(attachment.getId()))){
+                            // 그 delete 안에 이 attachment 아이디 존재하지 않을 때만 추가
+                            targetAttachmentsForTagAndComment.add(attachment);
+                        }
+                    }
+                    else{ //걍 애초에 delete 하는거 없으면 걍 더해주면 되지
+                        targetAttachmentsForTagAndComment.add(attachment);
+                    }
+
+                }
+
+            }
+
+            oldDocTag.addAll(req.getAddedTag());
+            oldDocComment.addAll(req.getAddedAttachmentComment());
+
+        }
+        //기존에 암것도 없었고, 추가된 것만 있을 때
+        else{
+
+            // 일단은 다 가져와
+            List<ProjectAttachment> oldAttachments = entity.getProjectAttachments();
+            for (ProjectAttachment attachment : oldAttachments) {
+
+                if (
+                        (!attachment.isDeleted())
+                    // (1) 첫번째 조건 : DELETED = FALSE (태그, 코멘트 적용 대상들은 현재 살아있어야 하고)
+                ) {
+                    if(req.getDeletedAttachments() != null){ // (1-1) 만약 사용자가 delete 를 입력한게 존재한다면
+                        if(!(req.getDeletedAttachments().contains(attachment.getId()))){
+                            // 그 delete 안에 이 attachment 아이디 존재하지 않을 때만 추가
+                            targetAttachmentsForTagAndComment.add(attachment);
+                        }
+                    }
+                    else{ //걍 애초에 delete 하는거 없으면 걍 더해주면 되지
+                        targetAttachmentsForTagAndComment.add(attachment);
+                    }
+
+                }
+
+            }
+
+            System.out.println(" 기존에 암것도 없었고, 추가된 것만 있을 때 ");
+            newDocTag.addAll(req.getAddedTag().subList(0,req.getAddedTag().size()));
+            newDocComment.addAll(req.getAddedAttachmentComment().subList(0, req.getAddedAttachmentComment().size()));
+
+        }
+        return new ProjectService.OldNewTagCommentUpdatedResult(
+
+                oldDocTag,
+                newDocTag,
+                oldDocComment,
+                newDocComment,
+
+                targetAttachmentsForTagAndComment
+        );
+    }
 
     @Transactional
     public Long deleted(Long id) {

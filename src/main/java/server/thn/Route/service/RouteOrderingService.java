@@ -11,7 +11,6 @@ import server.thn.Member.exception.MemberNotFoundException;
 import server.thn.Member.repository.MemberRepository;
 import server.thn.Project.entity.ProjectTypeEnum;
 import server.thn.Project.exception.ProjectTypeNotFoundException;
-import server.thn.Project.exception.ProjectTypeRequiredException;
 import server.thn.Project.repository.ProjectRepository;
 import server.thn.Project.repository.ProjectTypeRepository;
 import server.thn.Project.service.ProjectService;
@@ -78,8 +77,6 @@ public class RouteOrderingService {
 
         List<String> nameList = new ArrayList<>(names); // 라우트 프로덕트 리스트의 길이
         List<List<MemberDto>> mem = new ArrayList<>();
-
-        System.out.println(nameList.size() + "route 의 길이다 임마 ");
 
         int idx = 0;
         while (idx < nameList.size() - 1) {
