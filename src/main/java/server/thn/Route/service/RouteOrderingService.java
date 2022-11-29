@@ -266,7 +266,7 @@ public class RouteOrderingService {
             System.out.println(routeProduct1.getMembers().get(0).getRouteProduct());
         }
 
-        newRoute.getProject().updateTempsaveWhenMadeRoute();//라우트 만들면 임시저장 해제
+        newRoute.getProject().updateTempSaveReadOnlyWhenMadeRoute();//라우트 만들면 임시저장 해제
 
         newRoute.updateToComplete();
 

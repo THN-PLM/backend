@@ -431,8 +431,9 @@ public class Project extends EntityDate {
         this.readonly = readonly;
     }
 
-    public void updateTempsaveWhenMadeRoute() {
+    public void updateTempSaveReadOnlyWhenMadeRoute() {
         this.tempsave = false;
+        this.readonly = true;
     }
 
     // attachment 관련 메소드

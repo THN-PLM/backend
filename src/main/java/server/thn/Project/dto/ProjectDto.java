@@ -79,6 +79,10 @@ public class ProjectDto {
 
     private List<ProjectAttachmentDto> projectAttachmentList;
 
+    private boolean readonly;
+
+    private boolean tempsave;
+
     public static ProjectDto toDto(
             Project project,
             RouteOrderingRepository routeOrderingRepository,
@@ -143,8 +147,11 @@ public class ProjectDto {
                 currentRouteProduct==null? " " : currentRouteProduct.getRoute_name(), // phase
                 currentRouteProduct==null? " " : status.length>=2?status[1]:currentRouteProduct.getRoute_name(), //status
                 currentRouteProduct==null? " " : status.length>=2?status[0]:currentRouteProduct.getRoute_name(), //period
-                attachmentDtoList
+                attachmentDtoList,
                 // 라우트로 현재 단계 판별 뒤, 이에 해당하는 시기 날짜 건네주면 된다.
+
+                project.getReadonly(),
+                project.getTempsave()
         );
     }
 }
