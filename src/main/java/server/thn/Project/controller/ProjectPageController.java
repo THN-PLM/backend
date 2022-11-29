@@ -28,7 +28,7 @@ public class ProjectPageController {
     /**
      * 프로젝트 모듈에서의 프로젝트 리스트(내가 만든 프로젝트들maybe..?)
      */
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @GetMapping("/project/page")
     public Page<ProjectDto> pagingProject(
             @PageableDefault(size = 5)
@@ -45,7 +45,7 @@ public class ProjectPageController {
 
     // admin 만 보이는 프로젝트
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @GetMapping("/project/management")
     @AssignMemberId
     public Page<ProjectDto> pagingManagingProject(
