@@ -12,11 +12,21 @@ import server.thn.File.exception.AttachmentNotFoundException;
 import server.thn.File.exception.AttachmentTagNotFoundException;
 import server.thn.File.repository.AttachmentTagRepository;
 import server.thn.Member.entity.Member;
+import server.thn.Member.exception.MemberNotFoundException;
+import server.thn.Member.repository.MemberRepository;
+import server.thn.Project.dto.ProjectUpdateRequest;
+import server.thn.Project.exception.CarTypeNotFoundException;
+import server.thn.Project.exception.ProduceOrganizationNotFoundException;
+import server.thn.Project.exception.ProjectTypeNotFoundException;
+import server.thn.Project.repository.ProjectTypeRepository;
+import server.thn.Project.repository.carType.CarTypeRepository;
+import server.thn.Project.repository.produceOrg.ProduceOrganizationRepository;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -228,6 +238,179 @@ public class Project extends EntityDate {
 
         this.modifier = member;
     }
+
+    // 11/28 update 추가
+
+
+    public FileUpdatedResult update(
+            ProjectUpdateRequest req,
+
+            ProjectTypeRepository projectTypeRepository,
+
+            ProduceOrganizationRepository produceOrganizationRepository,
+
+            CarTypeRepository carTypeRepository,
+            MemberRepository memberRepository,
+            AttachmentTagRepository attachmentTagRepository,
+
+            List<Long> oldTags,
+            List<Long> newTags,
+
+            List<String> oldComment,
+            List<String> newComment,
+
+            List<ProjectAttachment> targetAttaches,
+
+            String tempEndOrUpdate
+    ) {
+
+        this.readonly = false;
+        this.tempsave = true;
+
+        this.setModifiedAt(LocalDateTime.now());
+
+        this.name = req.getName().isBlank() ? this.name : req.getName();
+
+        this.projectType =
+                req.getProjectTypeId() == null ?
+                        this.projectType :
+                        projectTypeRepository.findById(req.getProjectTypeId())
+                                .orElseThrow(ProjectTypeNotFoundException::new);
+
+        this.protoStartPeriod =
+                req.getProtoStartPeriod() == null ||
+                        req.getProtoStartPeriod().isBlank() ?
+                        this.protoStartPeriod :
+                        LocalDate.parse(req.getProtoStartPeriod(), DateTimeFormatter.ISO_DATE);
+
+        this.protoOverPeriod =
+                req.getProtoStartPeriod() == null ||
+                        req.getProtoOverPeriod().isBlank() ?
+                        this.protoOverPeriod :
+                        LocalDate.parse(req.getProtoOverPeriod(), DateTimeFormatter.ISO_DATE);
+
+        this.p1StartPeriod =
+                req.getP1StartPeriod() == null ||
+                        req.getP1StartPeriod().isBlank() ?
+                        this.p1StartPeriod :
+                        LocalDate.parse(req.getP1StartPeriod(), DateTimeFormatter.ISO_DATE);
+
+        this.p1OverPeriod =
+                req.getP1OverPeriod() == null ||
+                        req.getP1OverPeriod().isBlank() ?
+                        this.p1OverPeriod :
+                        LocalDate.parse(req.getP1OverPeriod(), DateTimeFormatter.ISO_DATE);
+
+        this.p2StartPeriod =
+                req.getP2StartPeriod() == null ||
+                        req.getP2StartPeriod().isBlank() ?
+                        this.p2StartPeriod :
+                        LocalDate.parse(req.getP2StartPeriod(), DateTimeFormatter.ISO_DATE);
+
+        this.p2OverPeriod =
+                req.getP2OverPeriod() == null ||
+                        req.getP2OverPeriod().isBlank() ?
+                        this.protoOverPeriod :
+                        LocalDate.parse(req.getP2OverPeriod(), DateTimeFormatter.ISO_DATE);
+
+        this.mStartPeriod=
+                req.getMStartPeriod() == null ||
+                        req.getMStartPeriod().isBlank() ?
+                        this.mStartPeriod :
+                        LocalDate.parse(req.getMStartPeriod(), DateTimeFormatter.ISO_DATE);
+
+        this.mOverPeriod =
+                req.getMOverPeriod() == null ||
+                        req.getMOverPeriod().isBlank() ?
+                        this.mOverPeriod:
+                        LocalDate.parse(req.getMOverPeriod(), DateTimeFormatter.ISO_DATE);
+
+//        this.newItem =
+//                req.getItemId() == null ?
+//                        this.newItem :
+//                        newItemRepository.findById(req.getItemId())
+//                                .orElseThrow(ItemNotFoundException::new);
+
+        this.produceOrganization =
+                req.getProduceOrganizationId() == null ?
+                        null :
+                        produceOrganizationRepository.findById(req.getProduceOrganizationId() )
+                                .orElseThrow(ProduceOrganizationNotFoundException::new);
+
+        this.carType =
+                req.getCarTypeId() == null ?
+                        null :
+                        carTypeRepository.findById(req.getCarTypeId())
+                                .orElseThrow(CarTypeNotFoundException::new);
+
+
+        //문서 시작
+
+        ProjectAttachmentUpdatedResult resultAttachment =
+
+                findAttachmentUpdatedResult(
+                        req.getAddedAttachments(),
+                        req.getDeletedAttachments(),
+                        false
+                );
+
+        if (req.getDeletedAttachments().size() > 0) {
+            deleteProjectAttachments(
+                    resultAttachment.getDeletedAttachments()
+            );
+        }
+
+        if(oldTags.size()>0) {
+            oldUpdatedAttachments(
+                    oldTags,
+                    oldComment,
+                    targetAttaches,
+                    attachmentTagRepository
+            );
+        }
+
+        if (req.getAddedAttachments()!=null && req.getAddedAttachments().size()>0) {
+            addUpdatedProjectAttachments(
+                    newTags,
+                    newComment,
+                    resultAttachment.getAddedAttachments(),
+                    attachmentTagRepository
+            );
+        }
+
+        FileUpdatedResult fileUpdatedResult =
+                new FileUpdatedResult(
+                        resultAttachment//, updatedAddedProjectAttachmentList
+                );
+
+        this.modifier =
+                memberRepository.findById(
+                        req.getModifierId()
+                ).orElseThrow(MemberNotFoundException::new);//05 -22 생성자 추가
+
+        ///0808 한 프로젝트는 여러 아이템 가능
+//        if (req.getItemId().size()>0) {
+//            this.newItems.clear();
+//            this.newItems = new ArrayList<>();
+//
+//            addNewItems(req.getItemId().stream().map(
+//                    id -> newItemRepository.findById(id).orElseThrow(ItemNotFoundException::new)
+//            ).collect(toList()));
+//        }
+
+        if(tempEndOrUpdate.equals("tempEnd")){
+            this.readonly = true;
+            this.tempsave = true;
+        }else{ // 그저 update 라면
+            this.readonly = false;
+            this.tempsave = true;
+        }
+
+        return fileUpdatedResult;
+    }
+
+
+    // update 완료
 
     /**
      * 추가할 attachments

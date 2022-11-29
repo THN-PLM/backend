@@ -14,8 +14,8 @@ public class RoutePreset {
     public String[][] projectRouteName = {
 
             {
-                    "All Do Registration",
-                    "All Do Complete",
+                    "All-Do Registration",
+                    "All-Do Complete",
                     "Proto Registration",
                     "Proto Complete",
                     "P1 Registration",
