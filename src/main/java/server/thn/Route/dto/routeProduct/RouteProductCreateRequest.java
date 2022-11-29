@@ -41,7 +41,7 @@ public class RouteProductCreateRequest{
 
         // 멤버 적절히 할당해줬는지 체크
 
-        Integer neededRouteProductCnt = routeProductType.size()-1;
+        Integer neededRouteProductCnt = routeProductType.size() ;
 
         if (req.getMemberIds()!=null && neededRouteProductCnt - 1 < req.getMemberIds().size()) {
             //멤버가 할당되지 않아서 짝이 안맞아
