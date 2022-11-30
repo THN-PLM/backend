@@ -110,18 +110,21 @@ public class ProjectDto {
         }
 
         // project 에 딸린 라우트가 있다면
+        RouteOrdering currentRouteOrdering = null;
         RouteProduct currentRouteProduct = null;
 
         if(routeOrderingRepository.findByProjectOrderByIdAsc(project).size()>0) {
-            RouteOrdering routeOrdering = routeOrderingRepository.findByProjectOrderByIdAsc(project).get(
+            currentRouteOrdering = routeOrderingRepository.findByProjectOrderByIdAsc(project).get(
                     routeOrderingRepository.findByProjectOrderByIdAsc(project).size() - 1
             );
 
-            List<RouteProduct> routeProductList =
-                    routeProductRepository.findAllByRouteOrdering(routeOrdering);
 
-            if (!(routeOrdering.getPresent() == routeProductList.size())) {
-                currentRouteProduct = routeProductList.get(routeOrdering.getPresent());
+
+            List<RouteProduct> routeProductList =
+                    routeProductRepository.findAllByRouteOrdering(currentRouteOrdering);
+
+            if (!(currentRouteOrdering.getPresent() == routeProductList.size())) {
+                currentRouteProduct = routeProductList.get(currentRouteOrdering.getPresent());
             }
         }
 
@@ -155,7 +158,7 @@ public class ProjectDto {
                 project.getReadonly(),
                 project.getTempsave(),
 
-                currentRouteProduct==null? -1L : currentRouteProduct.getId()
+                currentRouteOrdering==null? -1L : currentRouteOrdering.getId()
         );
     }
 }

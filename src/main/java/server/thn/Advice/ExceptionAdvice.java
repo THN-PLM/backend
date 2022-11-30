@@ -14,6 +14,7 @@ import server.thn.File.exception.AttachmentTagNotFoundException;
 import server.thn.File.exception.FileUploadFailureException;
 import server.thn.Member.exception.*;
 import server.thn.Project.exception.*;
+import server.thn.Route.exception.RouteNotFoundException;
 
 @RestControllerAdvice
 @Slf4j
@@ -153,5 +154,11 @@ public class ExceptionAdvice {
                 "Project Type Not Found ");
     }
 
+    @ExceptionHandler(RouteNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response RouteNotFoundException(RouteNotFoundException e) {
+        return Response.failure(404,
+                "Route Not Found  ");
+    }
 
 }
