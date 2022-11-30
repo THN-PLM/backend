@@ -83,6 +83,8 @@ public class ProjectDto {
 
     private boolean tempsave;
 
+    private Long routeId;
+
     public static ProjectDto toDto(
             Project project,
             RouteOrderingRepository routeOrderingRepository,
@@ -151,7 +153,9 @@ public class ProjectDto {
                 // 라우트로 현재 단계 판별 뒤, 이에 해당하는 시기 날짜 건네주면 된다.
 
                 project.getReadonly(),
-                project.getTempsave()
+                project.getTempsave(),
+
+                currentRouteProduct==null? -1L : currentRouteProduct.getId()
         );
     }
 }
