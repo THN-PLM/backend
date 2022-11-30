@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/project-drop/{id}").authenticated()
                 .antMatchers(HttpMethod.PUT, "/project-pending/{id}").authenticated()
 
-                .antMatchers(HttpMethod.POST, "/route/proj").authenticated()
+                .antMatchers(HttpMethod.POST, "/route/Proj").authenticated()
                 .antMatchers(HttpMethod.POST, "/route/item").authenticated()
 
                 .antMatchers(HttpMethod.GET, "/route/{id}").authenticated()
