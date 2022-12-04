@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import server.thn.Common.dto.response.IdResponse;
 import server.thn.File.service.FileService;
 import server.thn.Member.dto.MemberDto;
 import server.thn.Member.dto.sign.RefreshTokenResponse;
@@ -42,7 +43,7 @@ public class SignService {
     private String defaultImageAddress;
 
     @Transactional
-    public void signUp(SignUpRequest req) {
+    public IdResponse signUp(SignUpRequest req) {
         validateSignUpInfo(req);
         Member member = memberRepository.save(
                 SignUpRequest.toEntity(
@@ -55,6 +56,8 @@ public class SignService {
         if(req.getProfileImage()!=null){
             uploadProfileImage(member.getProfileImage(), req.getProfileImage());
         }
+
+        return new IdResponse(member.getId());
     }
 
     private void uploadProfileImage(ProfileImage profileImage, MultipartFile fileImage) {
