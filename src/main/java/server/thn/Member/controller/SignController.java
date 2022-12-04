@@ -32,8 +32,7 @@ public class SignController {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "회원가입", notes = "회원가입")
     public Response signUp(@Valid SignUpRequest req) {
-        signService.signUp(req);
-        return success();
+        return success(signService.signUp(req));
     }
 
     @CrossOrigin(origins = "https://localhost:3000")
