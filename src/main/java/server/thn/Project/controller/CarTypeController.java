@@ -12,11 +12,11 @@ import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "https://localhost:3000")
+@CrossOrigin(origins = "https://thn-plm.th-net.co.kr")
 public class CarTypeController {
     private final CarTypeService carTypeService;
 
-    @CrossOrigin(origins = "https://localhost:3000")
+    @CrossOrigin(origins = "https://thn-plm.th-net.co.kr")
     @GetMapping("/carTypeId")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "car list get", notes = "car list get")
@@ -34,7 +34,7 @@ public class CarTypeController {
 //                        create(cond));
 //    }
 
-    @CrossOrigin(origins = "https://localhost:3000")
+    @CrossOrigin(origins = "https://thn-plm.th-net.co.kr")
     @DeleteMapping("/carType/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "car delete", notes = "car delete")

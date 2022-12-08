@@ -14,12 +14,12 @@ import server.thn.Member.service.RoleService;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "https://localhost:3000")
+@CrossOrigin(origins = "https://thn-plm.th-net.co.kr")
 public class RoleController {
 
     private final RoleService roleService;
 
-    @CrossOrigin(origins = "https://localhost:3000")
+    @CrossOrigin(origins = "https://thn-plm.th-net.co.kr")
     @GetMapping("/roles")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "멤버 role GET", notes = "역할 리스트 불러오기")
