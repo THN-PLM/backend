@@ -12,7 +12,7 @@ spring:
 
   redis:
     host: localhost
-    password: qpqpqp0614
+    password: rose234!
     port: 6379
 
   main:
@@ -27,7 +27,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/thn
     platform: postgres
     username: postgres
-    password: qpqpqp0614
+    password: rose234!
 
   # jpa properties
   jpa:
