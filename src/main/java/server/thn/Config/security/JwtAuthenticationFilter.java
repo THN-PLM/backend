@@ -48,7 +48,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         HttpServletResponse response1 = (HttpServletResponse) response;
         HttpServletRequest request1 = (HttpServletRequest) request;
 
-        response1.setHeader("Access-Control-Allow-Origin", "https://thn-plm.th-net.co.kr");
+        response1.setHeader("Access-Control-Allow-Origin", "https://kthn-plm.kro.kr");
         response1.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response1.setHeader("Access-Control-Max-Age", "3600");
         response1.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me, Origin,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");

@@ -12,12 +12,12 @@ import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "https://thn-plm.th-net.co.kr")
+@CrossOrigin(origins = "https://kthn-plm.kro.kr")
 public class ProduceOrganizationController {
 
     private final ProduceOrganizationService produceOrganizationService;
 
-    @CrossOrigin(origins = "https://thn-plm.th-net.co.kr")
+    @CrossOrigin(origins = "https://kthn-plm.kro.kr")
     @GetMapping("/produceOrganization")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "생산조직 list get", notes = "생산조직 list get")
@@ -35,7 +35,7 @@ public class ProduceOrganizationController {
 //                        create(cond));
 //    }
 
-    @CrossOrigin(origins = "https://thn-plm.th-net.co.kr")
+    @CrossOrigin(origins = "https://kthn-plm.kro.kr")
     @DeleteMapping("/produceOrganization/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "생산조직 list 삭제", notes = "생산조직 삭제")
