@@ -48,4 +48,4 @@ src/main/generated/*
 
 ## 이미지들
 src/main/promedia/*
-src/main/prodmedia/image/*
+../../src/main/prodmedia/image/*

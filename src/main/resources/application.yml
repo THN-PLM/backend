@@ -3,7 +3,7 @@ server:
 
 upload:
   image:
-    location: src/main/prodmedia/image/
+    location: ../../src/main/prodmedia/image/
 
 spring:
 

@@ -464,7 +464,7 @@ public class Project extends EntityDate {
                     .findById(newTag.get(added.indexOf(i))).
                     orElseThrow(AttachmentNotFoundException::new).getName());
             i.setAttachmentaddress(
-                    "src/main/prodmedia/image/" +
+                    "../../src/main/prodmedia/image/" +
                             sdf1.format(now).substring(0, 10)
                             + "/"
                             + i.getUniqueName()
@@ -622,7 +622,7 @@ public class Project extends EntityDate {
                             orElseThrow(AttachmentTagNotFoundException::new).getName());
 
                     i.setAttachmentaddress(
-                            "src/main/prodmedia/image/" +
+                            "../../src/main/prodmedia/image/" +
                                     sdf1.format(now).substring(0,10)
                                     + "/"
                                     + i.getUniqueName()

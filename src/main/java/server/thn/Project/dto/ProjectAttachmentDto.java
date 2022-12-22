@@ -45,7 +45,7 @@ public class ProjectAttachmentDto implements Comparable<ProjectAttachmentDto>  {
                                 attachment.getTag()
                         )
                 ),
-                "src/main/prodmedia/image/"
+                "../../src/main/prodmedia/image/"
                         +
                         attachment.
                                 getCreatedAt().
@@ -82,7 +82,7 @@ public class ProjectAttachmentDto implements Comparable<ProjectAttachmentDto>  {
                                 AttachmentTagDto.toDto(
                                         attachmentTagRepository.findByName(i.getTag())
                                 ),
-                                "src/main/prodmedia/image/"
+                                "../../src/main/prodmedia/image/"
                                         +
                                         i.
                                                 getCreatedAt().
