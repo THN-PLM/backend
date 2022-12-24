@@ -72,7 +72,12 @@ public class MemberService {
 
     // dto list 로 반환
     public List<MemberDto> memberDtoConvert(@Nullable String search) {
-        return searchMemberWithKeywords( search ).stream().map(
+        if(search!=null&&search.length()>0&&!search.contains("\n")){
+            return searchMemberWithKeywords( search ).stream().map(
+                    mem -> MemberDto.toDto(mem, defaultImageAddress)
+            ).collect(Collectors.toList());
+        }
+        return memberRepository.findAll().stream().map(
                 mem -> MemberDto.toDto(mem, defaultImageAddress)
         ).collect(Collectors.toList());
     }
@@ -100,22 +105,25 @@ public class MemberService {
         indexes.add("Name");
         indexes.add("Department");
         indexes.add("Position/Authority");
-        indexes.add("Id");
-        indexes.add("Created At");
+        //indexes.add("Id");
+        //indexes.add("Created At");
 
         List<Long > ids = memberDtoConvert(name).stream().map(
                 mem -> mem.getId()
         ).collect(Collectors.toList());
 
-        if(name!=null){
+        if(name!=null&&name.length()>0&&!name.contains("\n")){
             totalSize+=memberRepository.findByUsernameContainingIgnoreCase(
                     name
             ).size();
-        }else{
+        }
+        else{
             totalSize+=memberRepository.findAll().size();
         }
 
-        return new CustomPageImpl<>(memberDtoConvert(name),pageRequest, totalSize, indexes, ids ,totalSize);
+        List<MemberDto> content = memberDtoConvert(name);
+
+        return new CustomPageImpl<>(content,pageRequest, totalSize, indexes, ids ,totalSize);
     }
 
 

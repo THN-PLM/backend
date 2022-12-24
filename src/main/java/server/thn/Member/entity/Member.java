@@ -49,7 +49,7 @@ public class Member extends EntityDate {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Department department;
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = false, length = 20)
     private String contact;
 
     @OneToMany(

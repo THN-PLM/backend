@@ -25,10 +25,9 @@ public class ProduceOrganizationClassification1 {
 
 
     @OneToMany(
-            mappedBy = "teamClassification1",
+            mappedBy = "produceOrganizationClassification1",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<ProduceOrganizationClassification2> teamClassification2List;
+    private List<ProduceOrganizationClassification2> produceOrganizationClassification2s;
 }
-

@@ -13,8 +13,8 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProduceOrganizationClassification2 {
+
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE2")
     @SequenceGenerator(name="SEQUENCE2", sequenceName="SEQUENCE2", allocationSize=1)
     private Long id;
@@ -26,9 +26,9 @@ public class ProduceOrganizationClassification2 {
     private Integer last;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teamClassification1_id", nullable = false)
+    @JoinColumn(name = "produceOrganizationClassification1", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private ProduceOrganizationClassification1 teamClassification1;
+    private ProduceOrganizationClassification1 produceOrganizationClassification1;
 
 }
 

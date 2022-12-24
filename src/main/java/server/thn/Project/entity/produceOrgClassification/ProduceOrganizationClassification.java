@@ -16,17 +16,19 @@ public class ProduceOrganizationClassification {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teamClassification1_id")
-    private ProduceOrganizationClassification1 classification1;
+    @JoinColumn(name = "produceOrganizationClassification1_id")
+    private ProduceOrganizationClassification1 produceOrganizationClassification1;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teamClassification2_id")
-    private ProduceOrganizationClassification2 classification2;
+    @JoinColumn(name = "produceOrganizationClassification2_id")
+    private ProduceOrganizationClassification2 produceOrganizationClassification2;
 
     public ProduceOrganizationClassification(ProduceOrganizationClassification1 classification1, ProduceOrganizationClassification2 classification2) {
-        this.classification1 = classification1;
-        this.classification2 = classification2;
+
+        this.produceOrganizationClassification1 = classification1;
+        this.produceOrganizationClassification2 = classification2;
+
     }
 
 }

@@ -34,7 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  */
         http
                 .csrf().disable()
-
                 .httpBasic().disable()
                 .formLogin().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -45,24 +44,57 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.GET, "/test").permitAll()
                 .antMatchers(HttpMethod.GET, "/route/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/members/{id}/**").access("@memberGuard.check(#id)")
+                .antMatchers(HttpMethod.DELETE, "/members/{id}/**").authenticated()//.access("@memberGuard.check(#id)")
                 .antMatchers(HttpMethod.GET, "/image/**").permitAll()
 
 //                .antMatchers(HttpMethod.POST, "/items").authenticated()
 //                .antMatchers(HttpMethod.POST, "/items/temp").authenticated()
 //                .antMatchers(HttpMethod.PUT, "/items/{id}").access("@itemGuard.check(#id)")
 //                .antMatchers(HttpMethod.DELETE, "/items/{id}").access("@itemGuard.check(#id)")
-//
 
+                .antMatchers(HttpMethod.POST, "/project").authenticated()
+                .antMatchers(HttpMethod.POST, "/project/temp").authenticated()
+                .antMatchers(HttpMethod.GET, "/project/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/project/management").authenticated()
+                .antMatchers(HttpMethod.PUT, "/project/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT, "/project/temp/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT, "/project/temp/end/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT, "/project-delete/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT, "/project-drop/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT, "/project-pending/{id}").authenticated()
+
+                .antMatchers(HttpMethod.POST, "/route/Proj").authenticated()
+                .antMatchers(HttpMethod.POST, "/route/item").authenticated()
+
+                .antMatchers(HttpMethod.GET, "/route/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/routeByProj/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/route/reject-possible/{id}").authenticated()
+                .antMatchers(HttpMethod.GET, "/route/members/{id}").authenticated()
+
+                .antMatchers(HttpMethod.GET, "/classification/produceOrganization").authenticated()
+                .antMatchers(HttpMethod.GET, "/classification/buyerOrganization").authenticated()
+
+                .antMatchers(HttpMethod.PUT, "/approveRoute/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT, "/rejectRoute/{id}").authenticated()
+                .antMatchers(HttpMethod.PUT, "/addMember").authenticated()
+
+                .antMatchers(HttpMethod.DELETE, "/exception/entry-point").permitAll()
+
+                .antMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
+                .antMatchers(HttpMethod.POST, "/swagger-ui.html").permitAll()
+                .antMatchers(HttpMethod.PUT, "/swagger-ui.html").permitAll()
+                .antMatchers(HttpMethod.POST, "/swagger-ui.html").permitAll()
 
                 .antMatchers(HttpMethod.POST, "/exception/entry-point").permitAll()
                 .antMatchers(HttpMethod.GET, "/exception/entry-point").permitAll()
                 .antMatchers(HttpMethod.PUT, "/exception/entry-point").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/exception/entry-point").permitAll()
 
-                .antMatchers(HttpMethod.GET, "/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/**").permitAll()
 
                 .antMatchers(HttpMethod.POST, "/logout/{id}").permitAll()
+
+
 
                 .anyRequest().hasAnyRole("ROLE_ADMIN")//멤버의 역할이 관리자인 경우에는 모든 것을 허용
 

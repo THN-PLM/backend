@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.transaction.annotation.Transactional;
+import server.thn.Project.dto.ReadCondition;
 import server.thn.Project.dto.carType.CarTypeReadCondition;
 import server.thn.Project.dto.carType.CarTypeReadResponse;
 import server.thn.Project.entity.CarType;
@@ -32,7 +33,7 @@ public class CustomCarTypeRepositoryImpl extends QuerydslRepositorySupport imple
     }
 
     @Override
-    public Page<CarTypeReadResponse> findAllByCondition(CarTypeReadCondition cond) {
+    public Page<CarTypeReadResponse> findAllByCondition( CarTypeReadCondition cond) {
         Pageable pageable = PageRequest.of(cond.getPage(), cond.getSize());
         Predicate predicate = createPredicate(cond);
         return new PageImpl<>(fetchAll(predicate, pageable), pageable, fetchCount(predicate));

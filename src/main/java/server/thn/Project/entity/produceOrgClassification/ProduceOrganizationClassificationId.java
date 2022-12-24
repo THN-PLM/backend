@@ -12,8 +12,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ProduceOrganizationClassificationId implements Serializable {
 
-    private ProduceOrganizationClassification1 classification1;
+    private ProduceOrganizationClassification1 produceOrganizationClassification1;
 
-    private ProduceOrganizationClassification2 classification2;
+    private ProduceOrganizationClassification2 produceOrganizationClassification2;
     
 }

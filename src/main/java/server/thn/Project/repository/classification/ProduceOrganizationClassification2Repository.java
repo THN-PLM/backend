@@ -6,7 +6,11 @@ import server.thn.Project.entity.produceOrgClassification.ProduceOrganizationCla
 
 import java.util.List;
 
-public interface TeamClassification2Repository extends JpaRepository<ProduceOrganizationClassification2, Long> {
-    List<ProduceOrganizationClassification2> findByTeamClassification1(ProduceOrganizationClassification1 classification1);
+public interface ProduceOrganizationClassification2Repository extends
+        JpaRepository<ProduceOrganizationClassification2, Long> {
+
+    List<ProduceOrganizationClassification2>
+        findByProduceOrganizationClassification1
+            (ProduceOrganizationClassification1 produceOrganizationClassification1);
 
 }

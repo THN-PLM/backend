@@ -1,5 +1,6 @@
 package server.thn.Member.controller;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -29,14 +30,14 @@ public class SignController {
     @CrossOrigin(origins = "https://localhost:3000")
     @PostMapping("sign-up")
     @ResponseStatus(HttpStatus.CREATED)
-
+    @ApiOperation(value = "회원가입", notes = "회원가입")
     public Response signUp(@Valid SignUpRequest req) {
-        signService.signUp(req);
-        return success();
+        return success(signService.signUp(req));
     }
 
     @CrossOrigin(origins = "https://localhost:3000")
     @PostMapping("/sign-in")
+    @ApiOperation(value = "로그인", notes = "로그인")
     @ResponseBody
     public Response signIn(@Valid SignInRequest req, HttpServletResponse response) throws IOException {
         SignInResponse signInResponse = signService.signIn(req);
@@ -74,14 +75,14 @@ public class SignController {
      * @param refreshToken
      * @return success
      */
+
     @CrossOrigin(origins = "https://localhost:3000")
     @PostMapping("/refresh-token")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "refresh token 발급 ", notes = "refresh token 발급")
     public Response refreshToken(@RequestHeader(value = "cookie") String refreshToken) {
         System.out.println(refreshToken);
         Integer index = refreshToken.length();
-
-        System.out.println("refresh token create ");
 
         String rToken = (refreshToken.toString().substring(20, index));
 
@@ -99,6 +100,7 @@ public class SignController {
     @CrossOrigin(origins = "https://localhost:3000")
     @PostMapping("/logout/{id}")
     @ResponseBody
+    @ApiOperation(value = "로그아웃 ", notes = "로그아웃")
     public Response signOut(@PathVariable Long id) {
         return success(id);
     }
