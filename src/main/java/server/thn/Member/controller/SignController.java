@@ -23,11 +23,11 @@ import static server.thn.Common.dto.response.Response.success;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
 public class SignController {
     private final SignService signService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @PostMapping("sign-up")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "회원가입", notes = "회원가입")
@@ -35,7 +35,7 @@ public class SignController {
         return success(signService.signUp(req));
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @PostMapping("/sign-in")
     @ApiOperation(value = "로그인", notes = "로그인")
     @ResponseBody
@@ -76,7 +76,7 @@ public class SignController {
      * @return success
      */
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @PostMapping("/refresh-token")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "refresh token 발급 ", notes = "refresh token 발급")
@@ -97,7 +97,7 @@ public class SignController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @PostMapping("/logout/{id}")
     @ResponseBody
     @ApiOperation(value = "로그아웃 ", notes = "로그아웃")

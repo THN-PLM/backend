@@ -14,19 +14,19 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
 public class MemberController {
 
     private final MemberService memberService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @GetMapping("/members/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response read(@PathVariable Long id) {
         return Response.success(memberService.read(id));
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @DeleteMapping("/members/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response delete(@PathVariable Long id) {
@@ -34,7 +34,7 @@ public class MemberController {
         return Response.success();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @GetMapping("/members")
     @ResponseStatus(HttpStatus.OK)
     public Response readAll(@Valid MemberReadCondition cond) {

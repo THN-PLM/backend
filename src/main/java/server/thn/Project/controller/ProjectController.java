@@ -18,7 +18,7 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
 public class ProjectController {
 
     @Value("${default.image.address}")
@@ -26,7 +26,7 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @PostMapping("/project/temp")
     @ResponseStatus(HttpStatus.CREATED)
     @AssignMemberId
@@ -46,7 +46,7 @@ public class ProjectController {
      * @param req
      * @return 200 (success)
      */
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @PostMapping("/project")
     @ResponseStatus(HttpStatus.CREATED)
     @AssignMemberId
@@ -67,7 +67,7 @@ public class ProjectController {
      * @param req
      * @return
      */
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @PutMapping("/project/temp/{id}")
     @ResponseStatus(HttpStatus.OK)
     @AssignModifierId //수정자 추가
@@ -80,7 +80,7 @@ public class ProjectController {
         return Response.success(projectService.update(id, req));
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @PutMapping("/project/temp/end/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     @AssignModifierId
@@ -94,7 +94,7 @@ public class ProjectController {
         );
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @DeleteMapping("/project/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response delete(@PathVariable Long id) {
@@ -110,7 +110,7 @@ public class ProjectController {
 
     // delete , drop , pending API
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @PutMapping("/project-delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response deleted(
@@ -121,7 +121,7 @@ public class ProjectController {
 
     // project/drop/{id}
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @PutMapping("/project-drop/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response drop(
@@ -131,7 +131,7 @@ public class ProjectController {
     }
 
     // project/pending/{id}
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://kthn-test.o-r.kr:441")
     @PutMapping("/project-pending/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Response pending(
