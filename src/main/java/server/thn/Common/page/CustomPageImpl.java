@@ -13,8 +13,10 @@ public class CustomPageImpl<T> extends PageImpl<T> {
 
     @Nullable
     private final List<Long> allResponsibleList;
-    //새로운 인스턴스 변수 생성
 
+    private final int requestPageSize;
+
+    private final int requestPageNumber;
 
     private final long total;
 
@@ -25,7 +27,11 @@ public class CustomPageImpl<T> extends PageImpl<T> {
 
     @Override
     public int getTotalPages() {
-        return getSize() == 0 ? 1 : (int) Math.ceil((double) total / (double) getSize());
+        return getSize() == 0 ? 1 : (int) Math.ceil((double) total / (double) getRequestPageSize());
+    }
+
+    private int getRequestPageSize() {
+        return requestPageSize;
     }
 
     @Override
@@ -38,20 +44,23 @@ public class CustomPageImpl<T> extends PageImpl<T> {
         return !hasNext();
     }
 
-    // 0811 : content 넘겨줄 때 이미 paging 이 레포지토리 단에서 완료된 채로 넘어와져야 한다. 레포지토리에서
-    public CustomPageImpl(List<T> content, Pageable pageable, long total, List<String> indexes, @Nullable List<Long> allResponsibleList, long total1) {
+    public CustomPageImpl(List<T> content, Pageable pageable, long total, List<String> indexes, @Nullable List<Long> allResponsibleList, long total1 , int requestPageSize, int requestPageNumber ) {
         super(content, pageable, total);
         this.indexes = indexes;
         this.allResponsibleList = allResponsibleList;
         this.total = total1;
+        this.requestPageSize = requestPageSize;
+        this.requestPageNumber = requestPageNumber;
     }
 
 
-    public CustomPageImpl(List<T> content, List<String> indexes, @Nullable List<Long> allResponsibleList, long total1) {
+    public CustomPageImpl(List<T> content, List<String> indexes, @Nullable List<Long> allResponsibleList, long total1, int requestPageSize, int requestPageNumber ) {
         super(content);
         this.indexes = indexes;
         this.allResponsibleList = allResponsibleList;
         this.total = total1;
+        this.requestPageSize = requestPageSize;
+        this.requestPageNumber = requestPageNumber;
     }
 
 
@@ -73,4 +82,3 @@ public class CustomPageImpl<T> extends PageImpl<T> {
     }
 
 }
-

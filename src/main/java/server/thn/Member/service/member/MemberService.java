@@ -105,8 +105,6 @@ public class MemberService {
         indexes.add("Name");
         indexes.add("Department");
         indexes.add("Position/Authority");
-        //indexes.add("Id");
-        //indexes.add("Created At");
 
         List<Long > ids = memberDtoConvert(name).stream().map(
                 mem -> mem.getId()
@@ -123,7 +121,7 @@ public class MemberService {
 
         List<MemberDto> content = memberDtoConvert(name);
 
-        return new CustomPageImpl<>(content,pageRequest, totalSize, indexes, ids ,totalSize);
+        return new CustomPageImpl<>(content,pageRequest, totalSize, indexes, ids ,totalSize, pageRequest.getPageSize() ,pageRequest.getPageNumber());
     }
 
 
