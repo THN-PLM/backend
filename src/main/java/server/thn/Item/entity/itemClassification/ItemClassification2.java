@@ -26,15 +26,15 @@ public class ItemClassification2 {
     private Integer last;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "classification1_id", nullable = false)
+    @JoinColumn(name = "itemClassification1_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private ItemClassification1 classification1;
+    private ItemClassification1 itemClassification1;
 
     @OneToMany(
-            mappedBy = "classification2",
+            mappedBy = "itemClassification2",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<ItemClassification3> classification3_list;
+    private List<ItemClassification3> itemClassification3_list;
 }
 

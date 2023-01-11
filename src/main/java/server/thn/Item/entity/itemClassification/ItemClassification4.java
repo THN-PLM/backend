@@ -24,9 +24,9 @@ public class ItemClassification4 {
     private Integer last;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "classification3_id", nullable = false)
+    @JoinColumn(name = "itemClassification3_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private ItemClassification3 classification3;
+    private ItemClassification3 itemClassification3;
 
 }
 
