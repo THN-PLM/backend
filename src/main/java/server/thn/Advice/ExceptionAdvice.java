@@ -13,6 +13,7 @@ import server.thn.File.exception.AttachmentNotFoundException;
 import server.thn.File.exception.AttachmentTagNotFoundException;
 import server.thn.File.exception.FileUploadFailureException;
 import server.thn.Member.exception.*;
+import server.thn.PCB.exception.UnSupportedExtractionException;
 import server.thn.Project.exception.*;
 import server.thn.Route.exception.RouteNotFoundException;
 
@@ -159,6 +160,12 @@ public class ExceptionAdvice {
     public Response RouteNotFoundException(RouteNotFoundException e) {
         return Response.failure(404,
                 "Route Not Found  ");
+    }
+    @ExceptionHandler(RouteNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response UnSupportedExtractionException(UnSupportedExtractionException e) {
+        return Response.failure(400,
+                "UnSupported File Extraction Exception ");
     }
 
 }

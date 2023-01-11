@@ -1,4 +1,4 @@
-package server.thn.Item.entity.itemOrgClassification;
+package server.thn.Item.entity.itemClassification;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
