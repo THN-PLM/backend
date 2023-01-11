@@ -10,13 +10,13 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class TeamClassificationId implements Serializable {
+public class ItemClassificationId implements Serializable {
 
-    private TeamClassification1 classification1;
+    private ItemClassification1 classification1;
 
-    private TeamClassification2 classification2;
+    private ItemClassification2 classification2;
 
-    private TeamClassification3 classification3;
+    private ItemClassification3 classification3;
 
-    private TeamClassification4 classification4;
+    private ItemClassification4 classification4;
 }

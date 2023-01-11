@@ -1,4 +1,4 @@
-package server.thn.Project.entity.buyerOrgClassification;
+package server.thn.Project.entity.buyer.buyerOrgClassification;
 
 import lombok.*;
 

@@ -1,17 +1,16 @@
-package server.thn.Project.entity;
+package server.thn.Project.entity.buyer;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import server.thn.Project.entity.produceOrgClassification.ProduceOrganizationClassification;
+import server.thn.Project.entity.buyer.buyerOrgClassification.BuyerOrganizationClassification;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProduceOrganization {
-
+public class BuyerOrganization {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE2")
     @SequenceGenerator(name="SEQUENCE2", sequenceName="SEQUENCE2", allocationSize=1)
@@ -20,7 +19,7 @@ public class ProduceOrganization {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "t1_id", nullable = false)
     @JoinColumn(name = "t2_id", nullable = false)
-    private ProduceOrganizationClassification department;
+    private BuyerOrganizationClassification department;
 
     @Column(nullable = false)
     private String code1;
@@ -35,14 +34,12 @@ public class ProduceOrganization {
         this.notDeleted = notDeleted;
     }
 
-    public ProduceOrganization(
+    public BuyerOrganization(
             String code1,
-            String code2,
-            ProduceOrganizationClassification produceOrganizationClassification
+            String code2
     ){
         this.code1 = code1;
         this.code2 = code2;
-        this.department = produceOrganizationClassification;
         this.notDeleted = true;
     }
 }

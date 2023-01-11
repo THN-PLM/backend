@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import server.thn.Member.entity.Member;
-import server.thn.Project.entity.produceOrgClassification.ProduceOrganizationClassification;
+import server.thn.Project.entity.producer.produceOrgClassification.ProduceOrganizationClassification;
 
 import java.util.List;
 import java.util.Optional;

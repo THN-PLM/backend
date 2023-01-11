@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import server.thn.Project.dto.C1SelectDto;
 import server.thn.Project.dto.ReadCondition;
 import server.thn.Project.dto.produceOrg.ProduceOrganizationListDto;
-import server.thn.Project.entity.ProduceOrganization;
+import server.thn.Project.entity.producer.ProduceOrganization;
 import server.thn.Project.exception.ProduceOrganizationNotFoundException;
 import server.thn.Project.repository.classification.ProduceOrganizationClassification1Repository;
 import server.thn.Project.repository.classification.ProduceOrganizationClassification2Repository;

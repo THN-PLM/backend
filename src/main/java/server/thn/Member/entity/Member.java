@@ -22,7 +22,6 @@ import static java.util.stream.Collectors.toSet;
 public class Member extends EntityDate {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE3")
     @SequenceGenerator(name="SEQUENCE3", sequenceName="SEQUENCE3", allocationSize=1)
 
@@ -36,13 +35,6 @@ public class Member extends EntityDate {
 
     @Column(nullable = false, length = 20)
     private String username;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "t1_id", nullable = false)
-//    @JoinColumn(name = "t2_id", nullable = false)
-//    @JoinColumn(name = "t3_id", nullable = false)
-//    @JoinColumn(name = "t4_id", nullable = false)
-//    private TeamClassification department;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
@@ -72,7 +64,6 @@ public class Member extends EntityDate {
             String email,
             String password,
             String username,
-            //TeamClassification department,
             Department department,
             String contact,
             List<Role> roles,
@@ -105,7 +96,6 @@ public class Member extends EntityDate {
             String email,
             String password,
             String username,
-            //TeamClassification department,
             Department department,
             String contact,
             List<Role> roles

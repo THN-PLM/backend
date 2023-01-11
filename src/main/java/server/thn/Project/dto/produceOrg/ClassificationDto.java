@@ -3,7 +3,7 @@ package server.thn.Project.dto.produceOrg;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import server.thn.Project.entity.produceOrgClassification.ProduceOrganizationClassification;
+import server.thn.Project.entity.producer.produceOrgClassification.ProduceOrganizationClassification;
 
 @Data
 @AllArgsConstructor

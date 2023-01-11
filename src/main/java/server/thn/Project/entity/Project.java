@@ -15,6 +15,8 @@ import server.thn.Member.entity.Member;
 import server.thn.Member.exception.MemberNotFoundException;
 import server.thn.Member.repository.MemberRepository;
 import server.thn.Project.dto.ProjectUpdateRequest;
+import server.thn.Project.entity.buyer.BuyerOrganization;
+import server.thn.Project.entity.producer.ProduceOrganization;
 import server.thn.Project.exception.CarTypeNotFoundException;
 import server.thn.Project.exception.ProduceOrganizationNotFoundException;
 import server.thn.Project.exception.ProjectTypeNotFoundException;

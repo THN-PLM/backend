@@ -1,8 +1,10 @@
-package server.thn.Project.entity.produceOrgClassification;
+package server.thn.Item.entity.itemOrgClassification;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,12 +12,12 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProduceOrganizationClassification1 {
+public class ItemClassification2 {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUENCE2")
     @SequenceGenerator(name="SEQUENCE2", sequenceName="SEQUENCE2", allocationSize=1)
     private Long id;
+
 
     @Column(nullable = false)
     private String name;
@@ -23,11 +25,16 @@ public class ProduceOrganizationClassification1 {
     @Column
     private Integer last;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teamClassification1_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private ItemClassification1 teamClassification1;
 
     @OneToMany(
-            mappedBy = "produceOrganizationClassification1",
+            mappedBy = "teamClassification2",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<ProduceOrganizationClassification2> produceOrganizationClassification2s;
+    private List<ItemClassification3> teamClassification3_list;
 }
+

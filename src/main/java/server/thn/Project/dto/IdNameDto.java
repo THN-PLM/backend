@@ -3,9 +3,8 @@ package server.thn.Project.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import server.thn.Project.entity.BuyerOrganization;
+import server.thn.Project.entity.buyer.BuyerOrganization;
 import server.thn.Project.entity.CarType;
-import server.thn.Project.entity.ProduceOrganization;
 
 @Data
 @AllArgsConstructor

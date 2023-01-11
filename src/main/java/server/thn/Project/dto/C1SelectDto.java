@@ -3,8 +3,8 @@ package server.thn.Project.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import server.thn.Project.entity.buyerOrgClassification.BuyerOrganizationClassification1;
-import server.thn.Project.entity.produceOrgClassification.ProduceOrganizationClassification1;
+import server.thn.Project.entity.buyer.buyerOrgClassification.BuyerOrganizationClassification1;
+import server.thn.Project.entity.producer.produceOrgClassification.ProduceOrganizationClassification1;
 import server.thn.Project.repository.classification.BuyerOrganizationClassification2Repository;
 import server.thn.Project.repository.classification.ProduceOrganizationClassification2Repository;
 

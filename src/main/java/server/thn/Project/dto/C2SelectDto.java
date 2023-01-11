@@ -5,12 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
-import server.thn.Project.entity.BuyerOrganization;
-import server.thn.Project.entity.buyerOrgClassification.BuyerOrganizationClassification2;
-import server.thn.Project.entity.produceOrgClassification.ProduceOrganizationClassification1;
-import server.thn.Project.entity.produceOrgClassification.ProduceOrganizationClassification2;
-import server.thn.Project.repository.classification.ProduceOrganizationClassification1Repository;
-import server.thn.Project.repository.classification.ProduceOrganizationClassification2Repository;
+import server.thn.Project.entity.buyer.buyerOrgClassification.BuyerOrganizationClassification2;
+import server.thn.Project.entity.producer.produceOrgClassification.ProduceOrganizationClassification2;
 
 import java.util.ArrayList;
 import java.util.List;
