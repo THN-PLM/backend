@@ -140,6 +140,7 @@ public class Pcb extends EntityDate {
     @Column(nullable = false)
     private boolean readonly;
 
+    // create, temp create
     public Pcb(
             ItemClassification classification,
             String partNumber, String name,
@@ -160,10 +161,6 @@ public class Pcb extends EntityDate {
             String arrayWidth,
             String arrayHeight,
             List<ItemPcbRelatedAttachment> itemAttachments,
-            List<DesignPcbRelatedAttachment> designAttachments,
-            List<SchematicDesignPcbRelatedAttachment> schematicDesignAttachments,
-            List<PbaDesignPcbRelatedAttachment> pbaDesignAttachments,
-            List<PcbDesignPcbRelatedAttachment> pcbDesignAttachments,
             Member member,
             boolean tempsave,
             boolean readonly
@@ -182,7 +179,6 @@ public class Pcb extends EntityDate {
         this.width = width;
         this.height = height;
         this.produceOrganization = produceOrganization;
-
         this.pcbCompleteReqDate = pcbCompleteReqDate;
         this.specialSpecification = specialSpecification;
         this.arrayNumber = arrayNumber;
@@ -193,6 +189,70 @@ public class Pcb extends EntityDate {
         if(itemAttachments!=null){
             addItemAttachment(itemAttachments);
         }
+        this.member = member;
+        this.modifier = member;
+        this.tempsave = tempsave;
+        this.readonly = readonly;
+    }
+
+    public void update(
+            ItemClassification classification,
+            String partNumber, String name,
+            String revision,
+            String masterNumber,
+            String material,
+            String thickness,
+            String innerOz,
+            String outerOz,
+            String platingTreatment,
+            String layer,
+            String width,
+            String height,
+            ProduceOrganization produceOrganization,
+            LocalDate pcbCompleteReqDate,
+            String specialSpecification,
+            Integer arrayNumber,
+            String arrayWidth,
+            String arrayHeight,
+            List<ItemPcbRelatedAttachment> itemAttachments,
+            Member member,
+            boolean tempsave,
+            boolean readonly
+    ) {
+        this.classification = classification;
+        this.partNumber = partNumber;
+        this.name = name;
+        this.revision = revision;
+        this.masterNumber = masterNumber;
+        this.material = material;
+        this.thickness = thickness;
+        this.innerOz = innerOz;
+        this.outerOz = outerOz;
+        this.platingTreatment = platingTreatment;
+        this.layer = layer;
+        this.width = width;
+        this.height = height;
+        this.produceOrganization = produceOrganization;
+        this.pcbCompleteReqDate = pcbCompleteReqDate;
+        this.specialSpecification = specialSpecification;
+        this.arrayNumber = arrayNumber;
+        this.arrayWidth = arrayWidth;
+        this.arrayHeight = arrayHeight;
+
+        this.itemAttachments = itemAttachments;
+        if(itemAttachments!=null){
+            addItemAttachment(itemAttachments);
+        }
+        this.member = member;
+        this.modifier = member;
+        this.tempsave = tempsave;
+        this.readonly = readonly;
+    }
+
+    public void addSchematicDesign(
+            List<DesignPcbRelatedAttachment> designAttachments,
+            List<SchematicDesignPcbRelatedAttachment> schematicDesignAttachments
+    ){
         this.designAttachments = designAttachments;
         if(designAttachments!=null){
             addDesignAttachment(designAttachments);
@@ -201,6 +261,12 @@ public class Pcb extends EntityDate {
         if(schematicDesignAttachments!=null){
             addSchematicAttachment(schematicDesignAttachments);
         }
+    }
+
+    public void addPcbDesign(
+            List<PbaDesignPcbRelatedAttachment> pbaDesignAttachments,
+            List<PcbDesignPcbRelatedAttachment> pcbDesignAttachments
+    ){
         this.pbaDesignAttachments = pbaDesignAttachments;
         if(pbaDesignAttachments!=null){
             addPbaAttachment(pbaDesignAttachments);
@@ -209,12 +275,9 @@ public class Pcb extends EntityDate {
         if(pcbDesignAttachments!=null){
             addPcbAttachments(pcbDesignAttachments);
         }
-        this.member = member;
-        this.modifier = member;
-        this.tempsave = tempsave;
-        this.readonly = readonly;
     }
 
+    // file add
     /**
      * 추가할 item attachments
      */

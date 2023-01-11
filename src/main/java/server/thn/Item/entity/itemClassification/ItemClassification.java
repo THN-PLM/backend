@@ -16,22 +16,22 @@ public class ItemClassification {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teamClassification1_id")
+    @JoinColumn(name = "classification1_id")
     private ItemClassification1 classification1;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teamClassification2_id")
+    @JoinColumn(name = "classification2_id")
     private ItemClassification2 classification2;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teamClassification3_id")
+    @JoinColumn(name = "classification3_id")
     private ItemClassification3 classification3;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teamClassification4_id")
+    @JoinColumn(name = "classification4_id")
     private ItemClassification4 classification4;
 
     public ItemClassification(ItemClassification1 classification1, ItemClassification2 classification2, ItemClassification3 classification3, ItemClassification4 classification4) {

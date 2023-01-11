@@ -24,10 +24,10 @@ public class ItemClassification1 {
 
 
     @OneToMany(
-            mappedBy = "teamClassification1",
+            mappedBy = "classification1",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<ItemClassification2> teamClassification2List;
+    private List<ItemClassification2> classification2List;
 }
 
